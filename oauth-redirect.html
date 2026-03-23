@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>FamilySearch OAuth Redirect</title>
+</head>
+<body>
+    <p>Autenticando con FamilySearch...</p>
+    <script src="https://cdn.jsdelivr.net/npm/fs-js-lite@latest/dist/FamilySearch.min.js"></script>
+    <script>
+        // Inicializa el SDK con la misma configuración básica que la app principal
+        // El SDK detectará automáticamente el token en la URL o el popup
+        const fs = new FamilySearch({
+            // ASEGÚRATE DE PONER TU CLIENT ID (APP KEY) AQUÍ TAMBIÉN
+            appKey: 'YOUR_APP_KEY', 
+            environment: 'integration',
+            redirectUri: window.location.origin + '/oauth-redirect.html',
+            saveAccessToken: true
+        });
+
+        // Procesa la respuesta de OAuth (este método maneja la URL automáticamente)
+        fs.oauthResponse(() => {
+            // Cierra la ventana emergente si se abrió como popup, o redirige al inicio
+            if (window.opener) {
+                window.close();
+            } else {
+                window.location.href = '/';
+            }
+        });
+    </script>
+</body>
+</html>
