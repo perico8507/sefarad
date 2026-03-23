@@ -17,17 +17,41 @@ document.addEventListener('DOMContentLoaded', () => {
 
         console.log("FamilySearch API lista para usarse:", fs);
 
-        // Ejemplo de uso: (Se requiere estar autenticado primero)
-        // fs.get('/platform/users/current', (error, response) => {
-        //     if (error) {
-        //         console.error('Error al obtener el usuario:', error);
-        //     } else {
-        //         console.log('Datos del usuario autenticado:', response.data);
-        //     }
-        // });
+        // Función para iniciar el inicio de sesión
+        const login = (e) => {
+            if (e) e.preventDefault();
+            console.log("Iniciando flujo de autorización OAuth2...");
+            // El SDK se encarga de construir la URL con client_id, redirect_uri, response_type=code, etc.
+            fs.oauthRedirect();
+        };
+
+        // Vincular al enlace "Acceder" de la interfaz estilo Wikipedia
+        const loginLink = document.getElementById('pt-login');
+        if (loginLink) {
+            loginLink.addEventListener('click', login);
+        }
+
+        // Verificar si ya estamos autenticados al cargar la página
+        if (fs.getAccessToken()) {
+            console.log("Sesión activa detectada.");
+            const userStatus = document.getElementById('pt-userpage');
+            if (userStatus) {
+                userStatus.innerHTML = '<a href="#">Sesión Iniciada</a>';
+            }
+            const loginItem = document.getElementById('pt-login');
+            if (loginItem) {
+                loginItem.innerHTML = '<a href="#">Cerrar Sesión</a>';
+                loginItem.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    fs.deleteAccessToken();
+                    window.location.reload();
+                });
+            }
+        }
         
-        // Exportar a nivel global por si necesitas llamarlo desde otros scripts o la consola
+        // Exportar a nivel global
         window.fsApi = fs;
+        window.fsLogin = login;
     } else {
         console.error("El SDK de FamilySearch no pudo ser cargado.");
     }
