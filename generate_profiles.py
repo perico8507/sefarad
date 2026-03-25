@@ -1,6 +1,7 @@
 import os
 import glob
 import re
+import unicodedata
 
 TRANSCRIPCIONES_DIR = 'transcripciones'
 PERFILES_DIR = 'perfiles'
@@ -120,38 +121,58 @@ TEMPLATE = """<!DOCTYPE html>
 </html>
 """
 
+def remove_accents(input_str):
+    nfkd_form = unicodedata.normalize('NFKD', input_str)
+    return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
+
+def clean_str(s):
+    return re.sub(r'[^a-zA-Z0-9]', '', remove_accents(s).lower())
+
+def get_tokens(s):
+    words = re.split(r'[^a-zA-Z0-9]+', remove_accents(s).lower())
+    return set(w for w in words if len(w) > 2 and w not in ['de', 'la', 'del', 'los', 'las', 'y'])
+
 def generate_profiles():
     os.makedirs(PERFILES_DIR, exist_ok=True)
     
     txt_files = glob.glob(os.path.join(TRANSCRIPCIONES_DIR, '*.txt'))
-    
-    # Existing images to match heuristics
     images = glob.glob(os.path.join(ACTAS_DIR, '*'))
+    
+    image_basenames = {os.path.basename(img): get_tokens(os.path.basename(img)) for img in images}
     
     generated_links = []
     
     for txt_path in txt_files:
         filename = os.path.basename(txt_path)
         base_name = os.path.splitext(filename)[0]
-        
-        # Clean up name for display
         display_name = base_name.replace('_', ' ').replace('FS', '').strip()
+        txt_tokens = get_tokens(base_name)
         
         with open(txt_path, 'r', encoding='utf-8') as f:
             transcription_text = f.read()
             
-        # Try to find a matching image naively
-        matched_img = None
-        for img in images:
-            if base_name.lower() in img.lower() or img.lower() in base_name.lower():
-                matched_img = os.path.basename(img)
-                break
+        # Match image
+        best_match = None
+        best_score = 0
+        for img_name, img_tokens in image_basenames.items():
+            overlap = len(txt_tokens.intersection(img_tokens))
+            if overlap > best_score:
+                best_score = overlap
+                best_match = img_name
                 
+        if best_score <= 1:
+            c_txt = clean_str(base_name)
+            for img_name in image_basenames.keys():
+                c_img = clean_str(img_name)
+                if c_txt in c_img or c_img in c_txt:
+                    best_match = img_name
+                    break
+                    
         image_html = ""
-        if matched_img:
+        if best_match:
             image_html = f'''
         <div class="document-container">
-            <img src="../assets/actas/{matched_img}" alt="Documento Original">
+            <img src="../assets/actas/{best_match}" alt="Documento Original de {display_name}">
             <p style="color: #888; font-size: 0.85em; font-style: italic; margin-top: 10px;">Manuscrito Original</p>
         </div>'''
         
@@ -182,7 +203,6 @@ def update_index(generated_links):
     list_html += "        </ul>"
     
     # Inject into index.html
-    # We replace the content inside <div class="documents-hall"> ... </div>
     pattern = re.compile(r'(<div class="documents-hall">\s*)<ul>.*?</ul>(\s*</div>)', re.DOTALL)
     
     if pattern.search(content):
