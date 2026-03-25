@@ -3,194 +3,343 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sefarad MX - Archivo Histórico</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <title>Sefarad MX - Museo y Archivo Histórico</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
     <style>
+        :root {
+            --bg-color: #0d0c0b; /* Very dark warm museum gray/black */
+            --text-main: #e8e3d9; /* Off-white parchment */
+            --accent-gold: #d4af37;
+            --accent-gold-dim: #8b7355;
+            --card-bg: #161513;
+            --border-glow: 0 0 15px rgba(212, 175, 55, 0.15);
+        }
+        
         body {
             font-family: 'Libre Baskerville', serif;
-            background-color: #f4f1ea;
-            color: #2c3e50;
+            background-color: var(--bg-color);
+            color: var(--text-main);
             margin: 0;
             padding: 0;
-            line-height: 1.6;
+            line-height: 1.7;
+            background-image: radial-gradient(circle at center, #1a1816 0%, #0d0c0b 100%);
+            background-attachment: fixed;
         }
+
+        /* MUSEUM HEADER */
         header {
-            background: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)), url('https://upload.wikimedia.org/wikipedia/commons/1/15/Map_of_New_Spain_1744.jpg') no-repeat center center;
-            background-size: cover;
-            color: white;
+            position: relative;
+            height: 70vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
             text-align: center;
-            padding: 80px 20px;
-            border-bottom: 5px solid #d4af37;
+            border-bottom: 2px solid var(--accent-gold-dim);
+            overflow: hidden;
         }
-        header h1 {
-            font-family: 'Cinzel', serif;
-            font-size: 4em;
-            margin: 0;
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.8);
-            letter-spacing: 2px;
-            color: #f8f9fa;
+        
+        .header-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: url('https://upload.wikimedia.org/wikipedia/commons/1/15/Map_of_New_Spain_1744.jpg') no-repeat center center;
+            background-size: cover;
+            opacity: 0.15;
+            z-index: 0;
+            filter: grayscale(50%) sepia(30%);
         }
-        header p {
-            font-size: 1.2em;
-            font-style: italic;
-            max-width: 600px;
-            margin: 20px auto;
-            color: #eaddd0;
-        }
-        .container {
-            max-width: 1200px;
-            margin: 40px auto;
+        
+        .header-content {
+            position: relative;
+            z-index: 1;
             padding: 0 20px;
         }
+
+        header h1 {
+            font-family: 'Cinzel', serif;
+            font-size: 5vw;
+            margin: 0;
+            font-weight: 700;
+            letter-spacing: 8px;
+            color: var(--accent-gold);
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(212, 175, 55, 0.3);
+        }
+        
+        header p {
+            font-size: 1.3em;
+            font-style: italic;
+            max-width: 800px;
+            margin: 30px auto 0;
+            color: #b5b0a1;
+            letter-spacing: 1px;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* TYPOGRAPHY */
         h2, h3 {
             font-family: 'Cinzel', serif;
-            color: #1a1a1a;
-            border-bottom: 2px solid #d4af37;
-            padding-bottom: 10px;
+            color: var(--accent-gold);
+            font-weight: 600;
         }
-        .hero-section {
+        
+        h2 {
+            font-size: 2.5em;
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+            padding-bottom: 20px;
+        }
+        
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: var(--accent-gold-dim);
+        }
+
+        /* EXHIBIT HERO SECTION */
+        .exhibit-section {
             display: flex;
             flex-wrap: wrap;
-            gap: 30px;
-            margin-bottom: 50px;
-            background: white;
-            padding: 30px;
-            box-shadow: 0 10px 20px rgba(0,0,0,0.05);
-            border-radius: 8px;
-            border-left: 5px solid #8b7355;
+            gap: 50px;
+            margin-bottom: 100px;
+            align-items: center;
         }
-        .hero-text {
+
+        .exhibit-text {
             flex: 1;
             min-width: 300px;
+            font-size: 1.1em;
+            color: #d1cbc0;
         }
-        .hero-image {
+
+        .exhibit-text p {
+            margin-bottom: 20px;
+            text-align: justify;
+        }
+
+        /* FRAME / PAINTING EFFECT */
+        .exhibit-frame {
             flex: 1;
             min-width: 300px;
-            text-align: center;
-        }
-        .hero-image img {
-            max-width: 100%;
-            border-radius: 5px;
-            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-            border: 3px solid #eaddd0;
-        }
-        .colonists-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
-            gap: 30px;
-            margin-bottom: 50px;
-        }
-        .colonist-card {
-            background: white;
-            padding: 25px;
-            border-radius: 8px;
-            box-shadow: 0 5px 15px rgba(0,0,0,0.05);
-            border-top: 4px solid #d4af37;
-        }
-        .colonist-card h3 {
-            border: none;
-            color: #8b7355;
-            margin-top: 0;
-            padding-bottom: 0;
-        }
-        .document-list-container {
-            background: #faf7f2; 
-            border: 1px solid #d4af37; 
-            padding: 30px; 
-            margin: 20px 0;
-        }
-        .document-list-container ul {
-            list-style: none; padding: 0;
-        }
-        .document-list-container li {
-            margin-bottom: 15px; border-bottom: 1px solid #eaddd0; padding-bottom: 10px;
-        }
-        a {
-            color: #8b7355;
-            text-decoration: none;
-            font-weight: bold;
-        }
-        a:hover {
-            color: #d4af37;
-            text-decoration: underline;
-        }
-        .footer {
-            background: #1a1a1a;
-            color: #f8f9fa;
             text-align: center;
             padding: 20px;
+            background: #000;
+            border: 1px solid #333;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.8), var(--border-glow);
+            position: relative;
+        }
+        
+        .exhibit-frame::before {
+            content: '';
+            position: absolute;
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 2px solid var(--accent-gold-dim);
+            pointer-events: none;
+        }
+
+        .exhibit-frame img {
+            max-width: 100%;
+            display: block;
+            filter: brightness(0.9) contrast(1.1);
+            transition: transform 0.5s ease, filter 0.5s ease;
+        }
+        
+        .exhibit-frame:hover img {
+            transform: scale(1.02);
+            filter: brightness(1) contrast(1.1);
+        }
+
+        .exhibit-caption {
+            font-size: 0.85em;
+            color: #888;
+            margin-top: 15px;
+            font-family: 'Libre Baskerville', serif;
+            font-style: italic;
+        }
+
+        /* GALLERY GRID */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
+            gap: 40px;
+            margin-bottom: 100px;
+        }
+
+        /* PEDESTAL CARD EFFECT */
+        .gallery-card {
+            background: var(--card-bg);
+            padding: 40px 30px;
+            border: 1px solid #2a2620;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            transition: all 0.4s ease;
+            position: relative;
+            text-align: center;
+        }
+        
+        .gallery-card::after {
+            content: '';
+            position: absolute;
+            bottom: 0; left: 0; width: 100%; height: 3px;
+            background: var(--accent-gold-dim);
+            transition: height 0.3s ease, background 0.3s ease;
+        }
+
+        .gallery-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.8), var(--border-glow);
+            border-color: var(--accent-gold-dim);
+        }
+        
+        .gallery-card:hover::after {
+            height: 5px;
+            background: var(--accent-gold);
+        }
+
+        .gallery-card h3 {
+            font-size: 1.5em;
+            margin-top: 0;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* DOCUMENTS GALLERY */
+        .documents-hall {
+            background: #111;
+            border: 1px solid #333;
+            padding: 50px;
+            margin: 50px 0;
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+        }
+        
+        .documents-hall ul {
+            list-style: none;
+            padding: 0;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+            gap: 20px;
+        }
+
+        .documents-hall li {
+            background: var(--card-bg);
+            padding: 20px;
+            border-left: 3px solid var(--accent-gold-dim);
+            transition: all 0.3s ease;
+        }
+
+        .documents-hall li:hover {
+            background: #1a1815;
+            border-left-color: var(--accent-gold);
+            transform: translateX(5px);
+        }
+
+        a {
+            color: var(--accent-gold);
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        a:hover {
+            color: #fff;
+        }
+
+        /* FOOTER */
+        .footer {
+            background: #050505;
+            color: #666;
+            text-align: center;
+            padding: 40px 20px;
             font-family: 'Cinzel', serif;
-            margin-top: 50px;
-            border-top: 5px solid #d4af37;
+            border-top: 1px solid #222;
+            letter-spacing: 2px;
+            font-size: 0.9em;
+        }
+        
+        /* OVERRIDE FOR INJECTED CONTENT TO FIT MUSEUM THEME */
+        #transcripciones, #family-tree-container-div {
+            background: #111 !important;
+            border-color: #333 !important;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5) !important;
         }
     </style>
 </head>
 <body>
 
 <header>
-    <h1>SEFARAD MX</h1>
-    <p>Archivo Histórico de los Colonizadores Sefardíes del Noreste de México. Memoria, Genealogía e Identidad.</p>
+    <div class="header-bg"></div>
+    <div class="header-content">
+        <h1>SEFARAD MX</h1>
+        <p>Archivo Histórico y Museo Digital de los Colonizadores Sefardíes del Noreste de México. Memoria, Genealogía e Identidad.</p>
+    </div>
 </header>
 
 <div class="container">
 
-    <div class="hero-section">
-        <div class="hero-text">
-            <h2>El Legado Sefardí en el Noreste</h2>
+    <div class="exhibit-section">
+        <div class="exhibit-text">
+            <h2>El Legado en la Frontera</h2>
             <p><strong>Sefarad MX</strong> representa uno de los archivos históricos más rigurosos dedicados a los linajes fundadores del noreste de México, con fuertes vínculos documentados a la diáspora judía originaria de Sefarad (la península ibérica).</p>
-            <p>La migración de familias sefardíes, conversos o criptojudíos hacia la Nueva España en los siglos XVI y XVII fue un fenómeno documentado. Buscando escapar del alcance de la Santa Inquisición en el centro del virreinato, muchos cruzaron el Atlántico y se adentraron en los territorios de frontera extrema, fundando el Nuevo Reino de León y la Nueva Extremadura (hoy Coahuila, Nuevo León y Tamaulipas).</p>
-            <p>Familias pioneras preservaron en el desierto no solo su sobrevivencia física frente a adversidades inmensas, sino también, a través del arraigo endogámico, indicios de su antigua fe y prácticas.</p>
+            <p>La migración de familias sefardíes, conversos o criptojudíos hacia la Nueva España en los siglos XVI y XVII fue un fenómeno documentado. Buscando escapar del alcance de la Santa Inquisición en el centro del virreinato, cruzaron el Atlántico y se adentraron en los territorios de frontera extrema, fundando el Nuevo Reino de León y la Nueva Extremadura (hoy Coahuila, Nuevo León y Tamaulipas).</p>
+            <p>En este museo digital preservamos las actas, manuscritos y la memoria viva de aquellos pioneros que forjaron su supervivencia en el desierto, manteniendo en el arraigo endogámico indicios de su origen.</p>
         </div>
-        <div class="hero-image">
+        <div class="exhibit-frame">
             <img src="https://upload.wikimedia.org/wikipedia/commons/4/4e/Fundacion_de_Monterrey_por_Diego_de_Montemayor_1596.jpg" alt="Fundación de Monterrey">
-            <p style="font-size: 0.8em; color: #555; margin-top: 10px;">Diego de Montemayor y los doce capitanes fundadores, muchos de ellos de origen sefardí, en la fundación de Monterrey (1596).</p>
+            <div class="exhibit-caption">Óleo representativo: Diego de Montemayor y los doce capitanes fundadores, de linaje converso, en la fundación de Monterrey (1596).</div>
         </div>
     </div>
 
-    <h2>Los Patriarcas Colonizadores</h2>
-    <div class="colonists-grid">
-        <div class="colonist-card">
+    <h2>Sala de Patriarcas</h2>
+    <div class="gallery-grid">
+        <div class="gallery-card">
             <h3>Capitán Lucas García</h3>
-            <p><strong>Fundador de Monterrey y Santa Catarina</strong></p>
-            <p>Hijo de <em>Baltasar de Sosa</em> (identificado históricamente como cristiano nuevo de origen portugués) e <em>Inés Rodríguez de Montemayor</em>. Lucas fue uno de los doce capitanes de Diego de Montemayor en la fundación definitiva de Monterrey en 1596.</p>
-            <p>Para evadir el escrutinio inquisitorial que asociaba ciertos apellidos con el judaísmo (tras el encarcelamiento de la familia Carvajal), Lucas y sus hermanos adoptaron los apellidos maternos "García" y "Rodríguez". Se le otorgaron las mercedes de la estancia de Santa Catalina, origen de la actual Santa Catarina, N.L.</p>
+            <p style="color: var(--accent-gold-dim); font-size: 0.9em; font-family: 'Cinzel', serif;">Fundador de Monterrey y Santa Catarina</p>
+            <p style="font-size: 0.95em; color: #b5b0a1; text-align: justify; margin-top: 20px;">Hijo de <em>Baltasar de Sosa</em> (cristiano nuevo de origen portugués) e <em>Inés Rodríguez de Montemayor</em>. Uno de los doce capitanes de Diego de Montemayor en la fundación de Monterrey (1596).</p>
+            <p style="font-size: 0.95em; color: #b5b0a1; text-align: justify;">Para evadir la persecución inquisitorial tras el caso Carvajal, adoptó apellidos maternos. Recibió mercedes en Santa Catalina, hoy Santa Catarina, N.L.</p>
         </div>
 
-        <div class="colonist-card">
+        <div class="gallery-card">
             <h3>Lorenzo García Gutiérrez</h3>
-            <p><strong>Alférez y Colonizador de Coahuila</strong></p>
-            <p>Conocido como Lorenzo García Gutiérrez de Ábrego, hijo de Lorenzo Agustín García y Leonor de Ábrego. Su linaje fue crucial en la consolidación de Saltillo, Parras y las expediciones hacia Monclova.</p>
-            <p>Su red de parentesco dio origen a linajes vitales del noreste como los <strong>García de la Garza</strong>. Integrados estrechamente con los Cavazos, Treviño y Garza, estos patriarcas formaron la élite empresarial, agrícola y ganadera que domó la región, conservando fuertemente el arraigo familiar característico de los descendientes conversos.</p>
+            <p style="color: var(--accent-gold-dim); font-size: 0.9em; font-family: 'Cinzel', serif;">Alférez y Colonizador de Coahuila</p>
+            <p style="font-size: 0.95em; color: #b5b0a1; text-align: justify; margin-top: 20px;">Conocido como Lorenzo García Gutiérrez de Ábrego. Su linaje fue crucial en la consolidación de Saltillo, Parras y las expediciones hacia Monclova.</p>
+            <p style="font-size: 0.95em; color: #b5b0a1; text-align: justify;">Patriarca vital de la región, dando origen a los <strong>García de la Garza</strong>. Integrados con los Cavazos, Treviño y Garza, dominaron la ganadería y agricultura regional conservando fuerte endogamia.</p>
         </div>
     </div>
 
-    <h2>Archivo Digital de Registros Originales</h2>
-    <p>A continuación se listan las actas y documentos digitalizados que certifican el linaje histórico. Cada documento ha sido nombrado conforme a su titular para garantizar la integridad del archivo.</p>
-    
-    <div class="document-list-container">
+    <h2>Bóveda de Documentos Originales</h2>
+    <div class="documents-hall">
         <ul>
-            <li><a href="perfiles/hermilo_garcia_garcia.html">Acta de Bautismo: Hermilo García García (1925)</a> - General Cepeda, Coahuila.</li>
-            <li><a href="Acta_Bautismo_Francisco_Garcia_Peña_y_Martina_Garcia_Rodriguez.jpg" target="_blank">Acta de Bautismo: Francisco García Peña (1883)</a> - San Francisco de Patos.</li>
-            <li><a href="Acta_Defuncion_Francisco_Garcia_Peña_General_Cepeda.jpg" target="_blank">Acta de Defunción: Francisco García Peña (1962)</a> - General Cepeda, Coahuila.</li>
-            <li><a href="Acta_Defuncion_Asencion_Flores_Villanueva_General_Cepeda.jpg" target="_blank">Acta de Defunción: Asunción Flores Villanueva (1962)</a> - General Cepeda, Coahuila.</li>
-            <li><a href="imagenes/Documento_Historico_Mateo_Garcia_y_Lucia_de_la_Cerda.jpg" target="_blank">Documento Histórico: Mateo García y Lucía de la Cerda</a> - Archivo de Saltillo.</li>
-            <li><a href="imagenes/Acta_Bautismo_Emilio_Garcia_Peña_1887.jpg" target="_blank">Acta de Bautismo: Emilio García Peña (1887)</a> - San Francisco de Patos.</li>
-            <li><a href="imagenes/Acta_Defuncion_Amador_Garcia_Peña_1957.jpg" target="_blank">Acta de Defunción: Amador García Peña (1957)</a> - General Cepeda, Coahuila.</li>
+            <li><a href="perfiles/hermilo_garcia_garcia.html">Acta de Bautismo: Hermilo García García (1925)</a><br><span style="font-size: 0.8em; color: #888;">General Cepeda, Coahuila</span></li>
+            <li><a href="Acta_Bautismo_Francisco_Garcia_Peña_y_Martina_Garcia_Rodriguez.jpg" target="_blank">Acta de Bautismo: Francisco García Peña (1883)</a><br><span style="font-size: 0.8em; color: #888;">San Francisco de Patos</span></li>
+            <li><a href="Acta_Defuncion_Francisco_Garcia_Peña_General_Cepeda.jpg" target="_blank">Acta de Defunción: Francisco García Peña (1962)</a><br><span style="font-size: 0.8em; color: #888;">General Cepeda, Coahuila</span></li>
+            <li><a href="Acta_Defuncion_Asencion_Flores_Villanueva_General_Cepeda.jpg" target="_blank">Acta de Defunción: Asunción Flores Villanueva (1962)</a><br><span style="font-size: 0.8em; color: #888;">General Cepeda, Coahuila</span></li>
+            <li><a href="imagenes/Documento_Historico_Mateo_Garcia_y_Lucia_de_la_Cerda.jpg" target="_blank">Documento Histórico: Mateo García y Lucía de la Cerda</a><br><span style="font-size: 0.8em; color: #888;">Archivo de Saltillo</span></li>
+            <li><a href="imagenes/Acta_Bautismo_Emilio_Garcia_Peña_1887.jpg" target="_blank">Acta de Bautismo: Emilio García Peña (1887)</a><br><span style="font-size: 0.8em; color: #888;">San Francisco de Patos</span></li>
+            <li><a href="imagenes/Acta_Defuncion_Amador_Garcia_Peña_1957.jpg" target="_blank">Acta de Defunción: Amador García Peña (1957)</a><br><span style="font-size: 0.8em; color: #888;">General Cepeda, Coahuila</span></li>
         </ul>
     </div>
 
     <!-- Injecting dynamically generated components -->
-    <div id="transcripciones" style="background: #fbfbfb; border: 1px solid #d4af37; padding: 30px; margin: 20px 0; border-radius: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
-    <h3 style='font-family: "Cinzel", serif; color: #1a1a1a; margin-top:0; border-bottom: 2px solid #d4af37; padding-bottom: 10px;'>Fichas de Extracción de Documentos Históricos</h3>
-    <p style="font-family: 'Libre Baskerville', serif; color: #4a4a4a; font-size: 0.95em;">
+    <div id="transcripciones" style="background: #111; border: 1px solid #d4af37; padding: 30px; margin: 20px 0; border-radius: 4px; box-shadow: 0 4px 6px rgba(0,0,0,0.05);">
+    <h3 style='font-family: "Cinzel", serif; color: #eaddd0; margin-top:0; border-bottom: 2px solid #d4af37; padding-bottom: 10px;'>Fichas de Extracción de Documentos Históricos</h3>
+    <p style="font-family: 'Libre Baskerville', serif; color: #ccc; font-size: 0.95em;">
         A continuación se presenta la información extraída de los manuscritos del Registro Civil y Parroquial de General Cepeda, Coahuila:
     </p>
     
     <div style="display: grid; grid-template-columns: repeat(auto-fill, minmax(300px, 1fr)); gap: 20px; margin-top: 20px;">
         <!-- Ficha 1 -->
-        <div style="background: white; padding: 15px; border-left: 4px solid #8b7355; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-            <h4 style="margin:0 0 10px 0; color: #2c3e50;">Francisco García Peña</h4>
-            <ul style="margin:0; padding-left: 20px; font-size: 0.9em; color: #555;">
+        <div style="background: #1a1a1a; padding: 15px; border-left: 4px solid #d4af37; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <h4 style="margin:0 0 10px 0; color: #d4af37;">Francisco García Peña</h4>
+            <ul style="margin:0; padding-left: 20px; font-size: 0.9em; color: #a0a0a0;">
                 <li><strong>Nacimiento / Bautismo:</strong> ~1883, San Francisco de Patos.</li>
                 <li><strong>Defunción:</strong> 1962, General Cepeda, Coahuila.</li>
                 <li><strong>Cónyuge:</strong> Martina García Rodríguez.</li>
@@ -199,9 +348,9 @@
         </div>
 
         <!-- Ficha 2 -->
-        <div style="background: white; padding: 15px; border-left: 4px solid #8b7355; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-            <h4 style="margin:0 0 10px 0; color: #2c3e50;">Emilio García Peña</h4>
-            <ul style="margin:0; padding-left: 20px; font-size: 0.9em; color: #555;">
+        <div style="background: #1a1a1a; padding: 15px; border-left: 4px solid #d4af37; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <h4 style="margin:0 0 10px 0; color: #d4af37;">Emilio García Peña</h4>
+            <ul style="margin:0; padding-left: 20px; font-size: 0.9em; color: #a0a0a0;">
                 <li><strong>Nacimiento / Bautismo:</strong> 1887, San Francisco de Patos.</li>
                 <li><strong>Padres:</strong> (Pendiente de confirmación paleográfica).</li>
                 <li><strong>Nota:</strong> Registro ubicado en FamilySearch, Imagen 29 de 727, Grupo 004896335.</li>
@@ -209,9 +358,9 @@
         </div>
         
         <!-- Ficha 3 -->
-        <div style="background: white; padding: 15px; border-left: 4px solid #8b7355; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-            <h4 style="margin:0 0 10px 0; color: #2c3e50;">Hermilo García García</h4>
-            <ul style="margin:0; padding-left: 20px; font-size: 0.9em; color: #555;">
+        <div style="background: #1a1a1a; padding: 15px; border-left: 4px solid #d4af37; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <h4 style="margin:0 0 10px 0; color: #d4af37;">Hermilo García García</h4>
+            <ul style="margin:0; padding-left: 20px; font-size: 0.9em; color: #a0a0a0;">
                 <li><strong>Nacimiento / Bautismo:</strong> 1925, General Cepeda, Coahuila.</li>
                 <li><strong>Padres:</strong> Francisco García Peña y Martina García Rodríguez.</li>
                 <li><strong>Abuelos Paternos:</strong> Familia García Peña.</li>
@@ -219,20 +368,20 @@
         </div>
         
         <!-- Ficha 4 -->
-        <div style="background: white; padding: 15px; border-left: 4px solid #8b7355; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
-            <h4 style="margin:0 0 10px 0; color: #2c3e50;">Asunción Flores Villanueva</h4>
-            <ul style="margin:0; padding-left: 20px; font-size: 0.9em; color: #555;">
+        <div style="background: #1a1a1a; padding: 15px; border-left: 4px solid #d4af37; box-shadow: 0 2px 4px rgba(0,0,0,0.05);">
+            <h4 style="margin:0 0 10px 0; color: #d4af37;">Asunción Flores Villanueva</h4>
+            <ul style="margin:0; padding-left: 20px; font-size: 0.9em; color: #a0a0a0;">
                 <li><strong>Defunción:</strong> 1962, General Cepeda, Coahuila.</li>
                 <li><strong>Nota:</strong> Documento custodiado en el Archivo del Registro Civil.</li>
             </ul>
         </div>
     </div>
-    <div class='family-tree-container' id='family-tree-container-div' style='background: #faf7f2; border: 1px solid #d4af37; padding: 20px; margin: 20px 0; overflow-x: auto; max-height: 800px; overflow-y: auto; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);'><h3 style='font-family: "Cinzel", serif; color: #1a1a1a; margin-top:0;'>Árbol Genealógico Completo (Descendencia hasta 1500)</h3><div class='tree-node' style='margin-left: 0px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>FRANCISCO JAVIER Garcia Gaona</strong><div class='tree-node' style='margin-left: 25px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Margarito Garcia Vázquez</strong> <span style='font-size:0.85em; color: #555; font-style: italic;'>(b. 1968)</span> <a href='https://ancestral.sefarad.site/items/show/22' target='_blank' style='font-size:0.75em; color: #a67c00; text-decoration: none;'>[Fuente]</a><div class='tree-node' style='margin-left: 50px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Jonas Garcia Castilleja</strong><div class='tree-node' style='margin-left: 75px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Hermilo Garcia García</strong> <span style='font-size:0.85em; color: #555; font-style: italic;'>(b. 1925, d. 1925)</span><div class='tree-node' style='margin-left: 100px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Francisco Garcia Peña</strong> <span style='font-size:0.85em; color: #555; font-style: italic;'>(b. 1883)</span><div class='tree-node' style='margin-left: 125px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Jesús Garcia Flores</strong> <span style='font-size:0.85em; color: #555; font-style: italic;'>(b. 1861, d. 1920)</span><div class='tree-node' style='margin-left: 150px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Don Jesus García</strong> <span style='font-size:0.85em; color: #555; font-style: italic;'>(b. 1819, d. 1895)</span><div class='tree-node' style='margin-left: 175px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Jose Antonio Garcia Guajardo</strong> <span style='font-size:0.85em; color: #555; font-style: italic;'>(b. 1787)</span><div class='tree-node' style='margin-left: 200px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>María Josefa Guajardo Galindo</strong> <span style='font-size:0.85em; color: #555; font-style: italic;'>(b. 1768)</span><div class='tree-node' style='margin-left: 225px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Pedro Joseph Nolasco Guajardo Del Rio</strong> <span style='font-size:0.85em; color: #555; font-style: italic;'>(b. 1733, d. 1806)</span><div class='tree-node' style='margin-left: 250px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Cristobal Martinez Guajardo Villarreal</strong> <span style='font-size:0.85em; color: #555; font-style: italic;'>(b. 1705, d. 1765)</span><div class='tree-node' style='margin-left: 275px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Antonio Tomas Martinez Guajardo De Aguirre</strong> <span style='font-size:0.85em; color: #555; font-style: italic;'>(b. 1681, d. 1780)</span><div class='tree-node' style='margin-left: 300px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #2c3e50; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Maria Aguirre Guillen De Abrego</strong> <span style='font-size:0.85em; color: #555; font-style: italic;'>(b. 1651, d. 1751)</span></div></div>
+    <div class='family-tree-container' id='family-tree-container-div' style='background: #1a1a1a; border: 1px solid #d4af37; padding: 20px; margin: 20px 0; overflow-x: auto; max-height: 800px; overflow-y: auto; box-shadow: inset 0 0 10px rgba(0,0,0,0.05);'><h3 style='font-family: "Cinzel", serif; color: #eaddd0; margin-top:0;'>Árbol Genealógico Completo (Descendencia hasta 1500)</h3><div class='tree-node' style='margin-left: 0px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>FRANCISCO JAVIER Garcia Gaona</strong><div class='tree-node' style='margin-left: 25px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Margarito Garcia Vázquez</strong> <span style='font-size:0.85em; color: #a0a0a0; font-style: italic;'>(b. 1968)</span> <a href='https://ancestral.sefarad.site/items/show/22' target='_blank' style='font-size:0.75em; color: #a67c00; text-decoration: none;'>[Fuente]</a><div class='tree-node' style='margin-left: 50px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Jonas Garcia Castilleja</strong><div class='tree-node' style='margin-left: 75px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Hermilo Garcia García</strong> <span style='font-size:0.85em; color: #a0a0a0; font-style: italic;'>(b. 1925, d. 1925)</span><div class='tree-node' style='margin-left: 100px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Francisco Garcia Peña</strong> <span style='font-size:0.85em; color: #a0a0a0; font-style: italic;'>(b. 1883)</span><div class='tree-node' style='margin-left: 125px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Jesús Garcia Flores</strong> <span style='font-size:0.85em; color: #a0a0a0; font-style: italic;'>(b. 1861, d. 1920)</span><div class='tree-node' style='margin-left: 150px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Don Jesus García</strong> <span style='font-size:0.85em; color: #a0a0a0; font-style: italic;'>(b. 1819, d. 1895)</span><div class='tree-node' style='margin-left: 175px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Jose Antonio Garcia Guajardo</strong> <span style='font-size:0.85em; color: #a0a0a0; font-style: italic;'>(b. 1787)</span><div class='tree-node' style='margin-left: 200px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>María Josefa Guajardo Galindo</strong> <span style='font-size:0.85em; color: #a0a0a0; font-style: italic;'>(b. 1768)</span><div class='tree-node' style='margin-left: 225px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Pedro Joseph Nolasco Guajardo Del Rio</strong> <span style='font-size:0.85em; color: #a0a0a0; font-style: italic;'>(b. 1733, d. 1806)</span><div class='tree-node' style='margin-left: 250px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Cristobal Martinez Guajardo Villarreal</strong> <span style='font-size:0.85em; color: #a0a0a0; font-style: italic;'>(b. 1705, d. 1765)</span><div class='tree-node' style='margin-left: 275px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Antonio Tomas Martinez Guajardo De Aguirre</strong> <span style='font-size:0.85em; color: #a0a0a0; font-style: italic;'>(b. 1681, d. 1780)</span><div class='tree-node' style='margin-left: 300px; border-left: 1px solid #d4af37; padding-left: 10px; margin-bottom: 5px; position: relative;'><div style='position: absolute; left: -1px; top: 12px; width: 10px; height: 1px; background-color: #d4af37;'></div><strong style='color: #d4af37; font-family: "Libre Baskerville", serif; font-size: 0.95em;'>Maria Aguirre Guillen De Abrego</strong> <span style='font-size:0.85em; color: #a0a0a0; font-style: italic;'>(b. 1651, d. 1751)</span></div></div>
 
 </div>
 
 <footer class="footer">
-    <p>&copy; 2026 Frente Cardenista - Archivo Sefarad MX. Preservando el legado histórico e institucional.</p>
+    <p>&copy; 2026 GRUPO EMPRESARIAL GARGA & FRENTE CARDENISTA<br>Archivo Sefarad MX. Custodiando la Memoria Institucional.</p>
 </footer>
 
 </body>
