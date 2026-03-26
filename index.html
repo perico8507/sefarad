@@ -47,7 +47,7 @@
         <div class="exhibit-section-alt">
             <h2 style="font-family: 'Cinzel', serif; text-align: center; border-bottom: 2px double var(--primary-gold); padding-bottom: 25px; margin-bottom: 30px; letter-spacing: 5px;">EL LEGADO EN LA FRONTERA</h2>
             <p style="font-size: 1.25rem; line-height: 2; text-align: justify; color: var(--text-dark);">
-                <strong>Sefarad MX</strong> representa la máxima autoridad documental sobre los linajes fundadores del noreste de México. Este repositorio preservamos las actas, manuscritos y la memoria paleográfica de los pioneros que forjaron la Nueva Extremadura y el Nuevo Reino de León. Una obra institucional del <strong>Grupo Empresarial GarGa</strong> para la preservación de la identidad nacional.
+                <strong>Sefarad MX</strong> representa la máxima autoridad documental sobre los linajes fundadores del noreste de México. En este repositorio preservamos las actas, manuscritos y la memoria paleográfica de los pioneros que forjaron la Nueva Extremadura y el Nuevo Reino de León. Una obra institucional del <strong>Grupo Empresarial GarGa</strong> para la preservación de la identidad nacional.
             </p>
         </div>
 
@@ -68,7 +68,6 @@
         <h2 style="font-family: 'Cinzel', serif; letter-spacing: 2px;">Bóveda de Documentos Originales</h2>
         <div class="documents-hall" style="border: 1px solid var(--primary-gold); border-radius: 0; background: white;">
             <ul>
-<ul>
             <li><a href="perfiles/1.html">Expediente: 1</a><br><span style="font-size: 0.8em; color: #888;">Archivo Sefarad MX</span></li>
             <li><a href="perfiles/1752_br_luisgarcia.html">Expediente: 1752 BR LuisGarcia</a><br><span style="font-size: 0.8em; color: #888;">Archivo Sefarad MX</span></li>
             <li><a href="perfiles/1774263357701.html">Expediente: 1774263357701</a><br><span style="font-size: 0.8em; color: #888;">Archivo Sefarad MX</span></li>
@@ -169,7 +168,6 @@
             <li><a href="perfiles/transcripcion_pdf_maria_concepcion.html">Expediente: Transcripcion PDF Maria Concepcion</a><br><span style="font-size: 0.8em; color: #888;">Archivo Sefarad MX</span></li>
             <li><a href="perfiles/transcript_pdf_emilio.html">Expediente: Transcript PDF Emilio</a><br><span style="font-size: 0.8em; color: #888;">Archivo Sefarad MX</span></li>
         </ul>
-</ul>
         </div>
 
         <div id="transcripciones" style="background: white !important; border: 1px solid var(--primary-gold) !important; padding: 40px; margin: 40px 0; border-radius: 0 !important;">
@@ -189,13 +187,6 @@
                         <li><strong>Padres:</strong> Francisco García Peña y Martina García Rodríguez.</li>
                     </ul>
                 </div>
-            </div>
-        </div>
-
-        <div class='family-tree-container' id='family-tree-container-div' style='background: white; border: 1px solid var(--primary-gold); padding: 20px; margin: 40px 0; overflow: auto; max-height: 800px;'>
-            <h3 style='font-family: "Cinzel", serif; color: var(--text-dark); margin-top:0; border-bottom: 1px solid var(--primary-gold-dim);'>Linaje Institucional (Descendencia)</h3>
-            <div id="tree-content">
-                <p style="font-family: 'Roboto', sans-serif; color: var(--text-muted); font-style: italic;">Accediendo a la base de datos genealógica...</p>
             </div>
         </div>
     </div>
@@ -259,18 +250,5 @@
     checkUser();
 </script>
 <script src="js/main.js"></script>
-<script>
-    async function loadTree() {
-        try {
-            const response = await fetch('tree_snippet.html');
-            if (response.ok) {
-                const html = await response.text();
-                document.getElementById('tree-content').innerHTML = html;
-                if (window.initializeTree) window.initializeTree();
-            }
-        } catch (e) { console.error('Error:', e); }
-    }
-    window.addEventListener('DOMContentLoaded', loadTree);
-</script>
 </body>
 </html>

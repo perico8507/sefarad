@@ -39,13 +39,29 @@ Mu.la
 En quinze de Sept.e de dho año de settecientos y Cinquenta y dos
 años Yo el L.do D.n Antt.o Casimiro de Yzaguirre Cura
 </div>
+
+        <div class="lineage-vault">
+            <h2>Mapa de Linaje Dinámico</h2>
+            <div id="tree-content">
+                <p style="color: #888; font-style: italic;">Cargando conexiones del linaje...</p>
+            </div>
+        </div>
     </div>
 
+    <script src="../js/tree.js"></script>
     <script>
         function zoomImage(src) {
             document.getElementById('zoomImg').src = src;
             document.getElementById('zoomOverlay').style.display = 'block';
         }
+        
+        // Initialize tree for this specific individual
+        document.addEventListener('DOMContentLoaded', () => {
+            const indiId = "@I182697448189@";
+            if (indiId && window.initDynamicTree) {
+                window.initDynamicTree(indiId);
+            }
+        });
     </script>
 </body>
 </html>

@@ -25,13 +25,29 @@
         
         <h2>Transcripción Paleográfica</h2>
         <div class="transcription-box">Documento sobre el Sargento Mayor y Capitan Blas de la Garza (1591)...</div>
+
+        <div class="lineage-vault">
+            <h2>Mapa de Linaje Dinámico</h2>
+            <div id="tree-content">
+                <p style="color: #888; font-style: italic;">Cargando conexiones del linaje...</p>
+            </div>
+        </div>
     </div>
 
+    <script src="../js/tree.js"></script>
     <script>
         function zoomImage(src) {
             document.getElementById('zoomImg').src = src;
             document.getElementById('zoomOverlay').style.display = 'block';
         }
+        
+        // Initialize tree for this specific individual
+        document.addEventListener('DOMContentLoaded', () => {
+            const indiId = "";
+            if (indiId && window.initDynamicTree) {
+                window.initDynamicTree(indiId);
+            }
+        });
     </script>
 </body>
 </html>

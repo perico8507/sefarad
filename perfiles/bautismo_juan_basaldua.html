@@ -25,13 +25,29 @@
         
         <h2>Transcripción Paleográfica</h2>
         <div class="transcription-box">en dho dia mes y año (2 de nov. de 1684)... baptise un niño espa-ñol que se llamo Juan hixo legitimo de p.o de bassaldua y de mariana... padrinos ... franco ... y p.a q.ste lo firme</div>
+
+        <div class="lineage-vault">
+            <h2>Mapa de Linaje Dinámico</h2>
+            <div id="tree-content">
+                <p style="color: #888; font-style: italic;">Cargando conexiones del linaje...</p>
+            </div>
+        </div>
     </div>
 
+    <script src="../js/tree.js"></script>
     <script>
         function zoomImage(src) {
             document.getElementById('zoomImg').src = src;
             document.getElementById('zoomOverlay').style.display = 'block';
         }
+        
+        // Initialize tree for this specific individual
+        document.addEventListener('DOMContentLoaded', () => {
+            const indiId = "@I182703768316@";
+            if (indiId && window.initDynamicTree) {
+                window.initDynamicTree(indiId);
+            }
+        });
     </script>
 </body>
 </html>

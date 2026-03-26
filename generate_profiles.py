@@ -2,11 +2,13 @@ import os
 import glob
 import re
 import unicodedata
+import json
 
 TRANSCRIPCIONES_DIR = 'transcripciones'
 PERFILES_DIR = 'perfiles'
 ACTAS_DIR = 'assets/actas'
 INDEX_FILE = 'index.html'
+DATA_FILE = 'supabase_data.json'
 
 TEMPLATE = """<!DOCTYPE html>
 <html lang="es">
@@ -31,19 +33,36 @@ TEMPLATE = """<!DOCTYPE html>
         
         <h2>Transcripción Paleográfica</h2>
         <div class="transcription-box">{transcription}</div>
+
+        <div class="lineage-vault">
+            <h2>Mapa de Linaje Dinámico</h2>
+            <div id="tree-content">
+                <p style="color: #888; font-style: italic;">Cargando conexiones del linaje...</p>
+            </div>
+        </div>
     </div>
 
+    <script src="../js/tree.js"></script>
     <script>
         function zoomImage(src) {{
             document.getElementById('zoomImg').src = src;
             document.getElementById('zoomOverlay').style.display = 'block';
         }}
+        
+        // Initialize tree for this specific individual
+        document.addEventListener('DOMContentLoaded', () => {{
+            const indiId = "{indi_id}";
+            if (indiId && window.initDynamicTree) {{
+                window.initDynamicTree(indiId);
+            }}
+        }});
     </script>
 </body>
 </html>
 """
 
 def remove_accents(input_str):
+    if not input_str: return ""
     nfkd_form = unicodedata.normalize('NFKD', input_str)
     return u"".join([c for c in nfkd_form if not unicodedata.combining(c)])
 
@@ -54,9 +73,28 @@ def get_tokens(s):
     words = re.split(r'[^a-zA-Z0-9]+', remove_accents(s).lower())
     return set(w for w in words if len(w) > 2 and w not in ['de', 'la', 'del', 'los', 'las', 'y'])
 
+def load_data():
+    if os.path.exists(DATA_FILE):
+        with open(DATA_FILE, 'r', encoding='utf-8') as f:
+            return json.load(f)
+    return None
+
+def find_best_indi(base_name, data):
+    if not data: return ""
+    clean_base = clean_str(base_name)
+    best_id = ""
+    
+    # Try exact or partial match in full_name
+    for indi_id, info in data['individuals'].items():
+        if clean_base in clean_str(info['full_name']) or clean_str(info['full_name']) in clean_base:
+            return indi_id
+            
+    return ""
+
 def generate_profiles():
     os.makedirs(PERFILES_DIR, exist_ok=True)
     
+    data = load_data()
     txt_files = glob.glob(os.path.join(TRANSCRIPCIONES_DIR, '*.txt'))
     images = glob.glob(os.path.join(ACTAS_DIR, '*'))
     
@@ -72,6 +110,9 @@ def generate_profiles():
         
         with open(txt_path, 'r', encoding='utf-8') as f:
             transcription_text = f.read()
+            
+        # Match individual ID
+        indi_id = find_best_indi(base_name, data)
             
         # Match image
         best_match = None
@@ -101,7 +142,8 @@ def generate_profiles():
         html_content = TEMPLATE.format(
             name=display_name,
             image_html=image_html,
-            transcription=transcription_text
+            transcription=transcription_text,
+            indi_id=indi_id
         )
         
         html_filename = f"{base_name.lower()}.html"
@@ -115,6 +157,8 @@ def generate_profiles():
     return generated_links
 
 def update_index(generated_links):
+    if not os.path.exists(INDEX_FILE): return
+    
     with open(INDEX_FILE, 'r', encoding='utf-8') as f:
         content = f.read()
         
@@ -127,16 +171,12 @@ def update_index(generated_links):
     # Inject into index.html using placeholder
     placeholder = "<!-- LISTA_EXPEDIENTES -->"
     if placeholder in content:
-        # Replace the entire div content or just the placeholder
-        list_container = f'<div class="documents-hall"><ul>\n{list_html}\n</ul></div>'
-        # We find the old div and replace it, or just replace placeholder
-        # To be safe and simple, let's just replace the placeholder if we use it correctly
         new_content = content.replace(placeholder, list_html)
         with open(INDEX_FILE, 'w', encoding='utf-8') as f:
             f.write(new_content)
         print("index.html updated successfully via placeholder.")
     else:
-        # Fallback to regex if placeholder not found
+        # Fallback to regex
         pattern = re.compile(r'(<div class="documents-hall"[^>]*>\s*)<ul>.*?</ul>(\s*</div>)', re.DOTALL)
         if pattern.search(content):
             new_content = pattern.sub(rf'\g<1><ul>\n{list_html}\n</ul>\g<2>', content)

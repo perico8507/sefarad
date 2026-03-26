@@ -31,13 +31,29 @@ Emilio.
 Villa de Patos mzo 31 de 87.
 En la Yglesia de sn Francisco de Asis de esta Villa de Patos, Yo el presbitero Juan B. de la Peña, cura propio de esta parroquia, bauticé solemnemente a un niño q. nació en esta a las [ilegible] del dia ocho de Agosto ultimo a quien puse por nombre Emilio, hijo legmo de Francisco Garcia y Martina de la Peña. Abuelos paternos Jose Ma. Garcia y Teodora Rodriguez, maternos Francisco de la Peña y Maria Ines [ilegible]. Padrinos D. Francisco Garcia y D.a Martina de la Peña a quienes adverti sus obligaciones y parentesco espiritual. Y para que conste lo firmé.
 Juan B. de la Peña</div>
+
+        <div class="lineage-vault">
+            <h2>Mapa de Linaje Dinámico</h2>
+            <div id="tree-content">
+                <p style="color: #888; font-style: italic;">Cargando conexiones del linaje...</p>
+            </div>
+        </div>
     </div>
 
+    <script src="../js/tree.js"></script>
     <script>
         function zoomImage(src) {
             document.getElementById('zoomImg').src = src;
             document.getElementById('zoomOverlay').style.display = 'block';
         }
+        
+        // Initialize tree for this specific individual
+        document.addEventListener('DOMContentLoaded', () => {
+            const indiId = "@I182697448189@";
+            if (indiId && window.initDynamicTree) {
+                window.initDynamicTree(indiId);
+            }
+        });
     </script>
 </body>
 </html>

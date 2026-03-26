@@ -26,13 +26,29 @@
         <h2>Transcripción Paleográfica</h2>
         <div class="transcription-box">En el mismo dia mes y año, en dha Ygl.a Bautize Puse Oleo, y Chrisma a vna Infanta q. nacio a catorce del corr.e a la ql. puse pr nombre Ma. Guadalupa, hija Lex.a de Thomas de la Cruz y de Rita de Cepeda Fueron sus Pad.s Xptoval de los Santos y y Da Josepha de los Santos, a qn.es adverti el parentesco y pa. qe. conste lo firme
 Franco Ygnacio de Valdes</div>
+
+        <div class="lineage-vault">
+            <h2>Mapa de Linaje Dinámico</h2>
+            <div id="tree-content">
+                <p style="color: #888; font-style: italic;">Cargando conexiones del linaje...</p>
+            </div>
+        </div>
     </div>
 
+    <script src="../js/tree.js"></script>
     <script>
         function zoomImage(src) {
             document.getElementById('zoomImg').src = src;
             document.getElementById('zoomOverlay').style.display = 'block';
         }
+        
+        // Initialize tree for this specific individual
+        document.addEventListener('DOMContentLoaded', () => {
+            const indiId = "@I182695745515@";
+            if (indiId && window.initDynamicTree) {
+                window.initDynamicTree(indiId);
+            }
+        });
     </script>
 </body>
 </html>

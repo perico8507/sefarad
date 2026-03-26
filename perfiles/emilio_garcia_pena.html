@@ -25,13 +25,29 @@
         
         <h2>Transcripción Paleográfica</h2>
         <div class="transcription-box">En la Parroquia de San Francisco de Asis de esta Villa de Patos, á los quince dias del mes de Junio de mil ochocientos ochenta y siete, Yo el Presbítero D. José M. Gonzalez, Bautizé solemnemente, y puse los santos oleos y sagrado crisma á un niño que nació en esta Villa, el dia veintidós de Mayo del corriente año, á quien puse por nombre Emilio, hijo legítimo de Mateo Garcia, y de Lucia de la Peña. Abuelos Paternos: José de Jesus Garcia, y Asencion Flores. Maternos: Calixto de la Peña y Maria Santos Saucedo. Fueron padrinos: D. Juan Antonio Garcia, y Doña Maria de Jesus de la Peña, á quienes advertí su obligacion y parentesco espiritual, y para que conste lo firmé. José M. Gonzalez</div>
+
+        <div class="lineage-vault">
+            <h2>Mapa de Linaje Dinámico</h2>
+            <div id="tree-content">
+                <p style="color: #888; font-style: italic;">Cargando conexiones del linaje...</p>
+            </div>
+        </div>
     </div>
 
+    <script src="../js/tree.js"></script>
     <script>
         function zoomImage(src) {
             document.getElementById('zoomImg').src = src;
             document.getElementById('zoomOverlay').style.display = 'block';
         }
+        
+        // Initialize tree for this specific individual
+        document.addEventListener('DOMContentLoaded', () => {
+            const indiId = "@I182697448189@";
+            if (indiId && window.initDynamicTree) {
+                window.initDynamicTree(indiId);
+            }
+        });
     </script>
 </body>
 </html>

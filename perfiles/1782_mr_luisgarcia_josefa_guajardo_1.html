@@ -29,13 +29,29 @@ Descripción: Acta de matrimonio de Luis Garcia y Maria Josefa Guajardo, fechada
 Transcripción:
 Luis Garcia con Josefa Guaxardo
 En esta Iglecia Parrl del Valle del Guaxuco en catorse de Octubre de mil setecientos ochenta y dos, Habiendo precedido las diligencias del Sto Concilio de Trento y tres amonestaciones que se hicieron en tres dias festibos y no resultando impedimento, Yo fr. Josef Sanchez casé y velé in facie eclesie a Luis Garcia español originario de la villa de Santiago del Saltillo y vezino de esta jurisdicion, hijo lex de D.n Man.l Garcia, y de D.a Phelipa Escovedo; Con Maria Josefa Guaxardo, española originaria y vecina de esta expresada Jurisdiccion; hija lex de D.n Xptobal Guaxardo y de D.a Franca Guerra. Fueron Padrinos... [texto continúa en la siguiente página]</div>
+
+        <div class="lineage-vault">
+            <h2>Mapa de Linaje Dinámico</h2>
+            <div id="tree-content">
+                <p style="color: #888; font-style: italic;">Cargando conexiones del linaje...</p>
+            </div>
+        </div>
     </div>
 
+    <script src="../js/tree.js"></script>
     <script>
         function zoomImage(src) {
             document.getElementById('zoomImg').src = src;
             document.getElementById('zoomOverlay').style.display = 'block';
         }
+        
+        // Initialize tree for this specific individual
+        document.addEventListener('DOMContentLoaded', () => {
+            const indiId = "@I182697448189@";
+            if (indiId && window.initDynamicTree) {
+                window.initDynamicTree(indiId);
+            }
+        });
     </script>
 </body>
 </html>

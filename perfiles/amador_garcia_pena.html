@@ -25,13 +25,29 @@
         
         <h2>Transcripción Paleográfica</h2>
         <div class="transcription-box">En General Cepeda, Coahuila a las 10 horas del dia 3 de Julio de 1957. Ante mi C. Oficial del Registro Civil compareció el C. Antonio Garcia, de 45 años, casado, agricultor, con domicilio en esta Villa, manifestando que hoy a las 5 horas falleció en su domicilio el C. Amador Garcia Peña, de 71 años, viudo, agricultor, originario y vecino de esta Villa, hijo legitimo de Mateo Garcia y Lucia de la Peña, ya finados. Fue causa del fallecimiento: Senilidad. Segun certificado expedido por el Dr. Se dio sepultura en el Panteon Municipal. Fueron testigos... Se leyo la presente acta y la firmaron los que supieron. Doy fe.</div>
+
+        <div class="lineage-vault">
+            <h2>Mapa de Linaje Dinámico</h2>
+            <div id="tree-content">
+                <p style="color: #888; font-style: italic;">Cargando conexiones del linaje...</p>
+            </div>
+        </div>
     </div>
 
+    <script src="../js/tree.js"></script>
     <script>
         function zoomImage(src) {
             document.getElementById('zoomImg').src = src;
             document.getElementById('zoomOverlay').style.display = 'block';
         }
+        
+        // Initialize tree for this specific individual
+        document.addEventListener('DOMContentLoaded', () => {
+            const indiId = "@I182697448189@";
+            if (indiId && window.initDynamicTree) {
+                window.initDynamicTree(indiId);
+            }
+        });
     </script>
 </body>
 </html>

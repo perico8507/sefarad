@@ -121,3 +121,54 @@ img {
     box-shadow: 0 0 50px #000;
     pointer-events: none;
 }
+
+/* DYNAMIC TREE STYLES */
+.lineage-vault {
+    margin-top: 60px;
+    padding-top: 40px;
+    border-top: 2px double var(--accent-gold-dim);
+}
+
+.lineage-vault h2 {
+    margin-bottom: 30px;
+}
+
+#tree-content {
+    background: #050505;
+    padding: 30px;
+    border: 1px solid #222;
+    min-height: 100px;
+}
+
+.tree-node-dynamic {
+    padding: 10px;
+    border-left: 1px solid var(--accent-gold-dim);
+    margin-bottom: 5px;
+    position: relative;
+    transition: background 0.2s;
+}
+
+.tree-node-dynamic:hover {
+    background: rgba(212, 175, 55, 0.05);
+}
+
+.tree-node-dynamic::before {
+    content: '';
+    position: absolute;
+    left: 0; top: 20px;
+    width: 15px; height: 1px;
+    background: var(--accent-gold-dim);
+}
+
+.node-info strong {
+    color: var(--accent-gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.95em;
+}
+
+.node-meta {
+    color: #888;
+    font-size: 0.8em;
+    margin-left: 10px;
+    font-style: italic;
+}
