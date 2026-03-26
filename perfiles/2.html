@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de 2 - Museo Sefarad MX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body oncontextmenu="return false;">
+    <div class="zoom-overlay" id="zoomOverlay" onclick="this.style.display='none'">
+        <img id="zoomImg" src="" oncontextmenu="return false;" draggable="false">
+    </div>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Volver al Archivo Central</a>
+        
+        <h1>Expediente Histórico: 2</h1>
+        
+        
+        <div class="document-container">
+            <img src="../assets/actas/Leonarda_Manuela_Gauna_Baptism_14_Jul_1754_Galeana__1_of_2_(1).jpeg" alt="Documento Original de 2" onclick="zoomImage(this.src)" oncontextmenu="return false;" draggable="false">
+            <p style="color: #888; font-size: 0.85em; font-style: italic; margin-top: 10px;">Manuscrito Original (Clic para ampliar)</p>
+        </div>
+        
+        <h2>Transcripción Paleográfica</h2>
+        <div class="transcription-box">Perfil: Matrimonio de Antonio Garcia Peña y Da. Cardenas
+Descripción: Acta de matrimonio eclesiástico de Antonio Garcia Peña fechada el 19 de agosto de 1891 en la Parroquia de San Pablo de Galeana.
+Transcripción:
+No 43.
+Antonio Garcia y Peña
+En la Parroquia de San Pablo de Galeana á los
+diez y nueve dias del mes de Agosto de mil
+ochocientos noventa y uno. Yo el Presbitero José
+Ma. Morquecho Cura Propio y Juez Eclesiastico
+de esta Parroquia. Previa informacion y publi-
+cadas las tres moniciones en tres dias festivos in
+ter misarum solemnia y sin haber resultado impe-
+dimento alguno; asi como las proclamas civiles ma-
+trimoniales, y previo el consentimiento de sus
+padres, uni en sagrado matrimonio y
+vele in facie Eclesiae a Antonio Garcia y
+Peña, soltero, de veinte y dos años de edad,
+hijo legitimo de D. Francisco Garcia y Peña y
+de Da. Maria Antonia Guajardo, originario y
+vecino de esta Parroquia, con Da. [Maria?]
+Cardenas, doncella de diez y siete años
+de edad, hija legitima de D. [name?] y de
+Da. [name?], originaria y vecina de esta
+[Parroquia]. Fueron sus padrinos D. Juan Garcia y
+Da. Antonia [...]. Testigos: [names]
+Y para que conste lo firme.
+José Ma. Morquecho
+</div>
+    </div>
+
+    <script>
+        function zoomImage(src) {
+            document.getElementById('zoomImg').src = src;
+            document.getElementById('zoomOverlay').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

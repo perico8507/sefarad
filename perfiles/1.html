@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de 1 - Museo Sefarad MX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body oncontextmenu="return false;">
+    <div class="zoom-overlay" id="zoomOverlay" onclick="this.style.display='none'">
+        <img id="zoomImg" src="" oncontextmenu="return false;" draggable="false">
+    </div>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Volver al Archivo Central</a>
+        
+        <h1>Expediente Histórico: 1</h1>
+        
+        
+        <div class="document-container">
+            <img src="../assets/actas/Leonarda_Manuela_Gauna_Baptism_14_Jul_1754_Galeana__1_of_2_(1).jpeg" alt="Documento Original de 1" onclick="zoomImage(this.src)" oncontextmenu="return false;" draggable="false">
+            <p style="color: #888; font-size: 0.85em; font-style: italic; margin-top: 10px;">Manuscrito Original (Clic para ampliar)</p>
+        </div>
+        
+        <h2>Transcripción Paleográfica</h2>
+        <div class="transcription-box">Perfil: Matrimonio de Joseph Miguel Garcia y Francisca Xaviera Ramos
+Descripción: Acta de matrimonio de Joseph Miguel Garcia y Francisca Xaviera Ramos fechada el 1 de octubre de 1761.
+Transcripción:
+En Primero de Octubre de mil setecientos secenta
+y un años haviendo procedido las informaciones
+y proclamas dispuetas por el sto concilio de Tren
+to y no haviendo resultado impedimento Alguno
+despose [...] a Joseph Miguel Garcia Originario
+y Vezino deste Real con Francisca Xaviera Ramos Origina
+ria de la Jurisdiccion del Saltillo y Vezina de es
+te dicho Real haviendo sido examinados en la Doc
+trina Christiana; siendo Testigos Francisco Juares
+y Juan de Leon Y para que conste lo firme
+Fr. Jph Joaquin de Jesus [rubrica]
+</div>
+    </div>
+
+    <script>
+        function zoomImage(src) {
+            document.getElementById('zoomImg').src = src;
+            document.getElementById('zoomOverlay').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,142 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap');
+
+:root {
+    --primary-dark: #1a1816;
+    --primary-gold: #d4af37;
+    --primary-gold-dim: #8b7355;
+    --bg-cream: #faf7f2;
+    --text-dark: #2c1e1a;
+    --text-muted: #6b5a50;
+    --border-gold: rgba(212, 175, 55, 0.3);
+}
+
+body {
+    background-color: var(--bg-cream);
+    background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+    color: var(--text-dark);
+    font-family: 'Libre Baskerville', serif;
+}
+
+/* INSTITUTIONAL HEADER */
+header {
+    background-color: var(--primary-dark) !important;
+    border-bottom: 3px solid var(--primary-gold) !important;
+    color: white;
+}
+
+.header-content h1 {
+    font-family: 'Cinzel', serif;
+    color: var(--primary-gold) !important;
+    font-size: 1.5rem;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+.header-content h1::before {
+    content: '⚜️' !important;
+}
+
+.header-nav a {
+    color: #eaddd0 !important;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem !important;
+    letter-spacing: 1px;
+}
+
+.header-nav a:hover, .header-nav a.active {
+    color: var(--primary-gold) !important;
+    border-bottom-color: var(--primary-gold) !important;
+}
+
+.user-menu .login-btn {
+    color: var(--primary-gold) !important;
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+}
+
+/* HERO SECTION UPDATED */
+.hero {
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Fundacion_de_Monterrey_por_Diego_de_Montemayor_1596.jpg') center/cover !important;
+    border-bottom: 1px solid var(--primary-gold);
+    padding: 100px 20px !important;
+}
+
+.hero h2 {
+    font-family: 'Cinzel', serif;
+    font-weight: 700 !important;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--primary-gold) !important;
+}
+
+.hero p {
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    max-width: 900px !important;
+}
+
+/* CARDS - HISTORICAL STYLE */
+.gallery-card {
+    background: white !important;
+    border: 1px solid var(--border-gold) !important;
+    border-radius: 0 !important;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.05) !important;
+    position: relative;
+}
+
+.gallery-card::after {
+    content: '';
+    position: absolute;
+    top: 5px; left: 5px; right: 5px; bottom: 5px;
+    border: 1px solid rgba(139, 115, 85, 0.1);
+    pointer-events: none;
+}
+
+.gallery-card h3 {
+    font-family: 'Cinzel', serif;
+    color: var(--text-dark) !important;
+    border-bottom: 1px solid var(--primary-gold-dim);
+    padding-bottom: 10px;
+}
+
+.btn {
+    background: var(--primary-dark) !important;
+    color: var(--primary-gold) !important;
+    font-family: 'Cinzel', serif;
+    border: 1px solid var(--primary-gold) !important;
+    border-radius: 0 !important;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    background: var(--primary-gold) !important;
+    color: var(--primary-dark) !important;
+}
+
+/* TREE CONTAINER */
+#family-tree-container-div {
+    background: white !important;
+    border: 1px solid var(--primary-gold) !important;
+    border-radius: 0 !important;
+}
+
+.tree-node > strong {
+    color: var(--text-dark) !important;
+    font-family: 'Libre Baskerville', serif !important;
+}
+
+.tree-node-toggle {
+    border-color: var(--primary-gold-dim) !important;
+    color: var(--primary-gold-dim) !important;
+    border-radius: 0 !important;
+}
+
+/* FOOTER */
+.footer {
+    background: var(--primary-dark) !important;
+    color: #8b7355 !important;
+    border-top: 2px solid var(--primary-gold) !important;
+    font-family: 'Cinzel', serif;
+}

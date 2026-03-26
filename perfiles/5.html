@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de 5 - Museo Sefarad MX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body oncontextmenu="return false;">
+    <div class="zoom-overlay" id="zoomOverlay" onclick="this.style.display='none'">
+        <img id="zoomImg" src="" oncontextmenu="return false;" draggable="false">
+    </div>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Volver al Archivo Central</a>
+        
+        <h1>Expediente Histórico: 5</h1>
+        
+        
+        <div class="document-container">
+            <img src="../assets/actas/Leonarda_Manuela_Gauna_Baptism_14_Jul_1754_Galeana__1_of_2_(1).jpeg" alt="Documento Original de 5" onclick="zoomImage(this.src)" oncontextmenu="return false;" draggable="false">
+            <p style="color: #888; font-size: 0.85em; font-style: italic; margin-top: 10px;">Manuscrito Original (Clic para ampliar)</p>
+        </div>
+        
+        <h2>Transcripción Paleográfica</h2>
+        <div class="transcription-box">Perfil: Bautismo de Maria Trinidad
+Descripción: Acta de bautismo de Maria Trinidad, hija de Francisco Garcia y Antonia Guajardo, fechada el 20 de julio de 1867.
+Transcripción:
+Maria Trinidad
+En la Parroquia de S Pablo de Galeana a los
+veinte dias del mes de Julio de mil ocho
+cientos sesenta y siete Yo el P. Cura P. [...]
+bautice a una niña de quatro dias na
+cida en esta Cabecera a quien puse por nombre
+Maria Trinidad hija leg de D. Franco
+Garcia y de Da Antonia Guajardo am-
+bos de este vecindario Abuelos paternos
+D. Franco Garcia Peña y Da Maria Antonia
+[...] Abuelos maternos D Franco
+Guajardo y Da Maria de [...] Padrinos
+D [...] y Da [...] a quienes ad-
+verti su obligacion. Y para que conste
+lo firme.</div>
+    </div>
+
+    <script>
+        function zoomImage(src) {
+            document.getElementById('zoomImg').src = src;
+            document.getElementById('zoomOverlay').style.display = 'block';
+        }
+    </script>
+</body>
+</html>

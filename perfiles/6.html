@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Perfil de 6 - Museo Sefarad MX</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;600;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="../css/profile.css">
+</head>
+<body oncontextmenu="return false;">
+    <div class="zoom-overlay" id="zoomOverlay" onclick="this.style.display='none'">
+        <img id="zoomImg" src="" oncontextmenu="return false;" draggable="false">
+    </div>
+
+    <div class="container">
+        <a href="../index.html" class="back-link">← Volver al Archivo Central</a>
+        
+        <h1>Expediente Histórico: 6</h1>
+        
+        
+        <div class="document-container">
+            <img src="../assets/actas/Juan_Basaldua_Padilla_Baptism_2_Nov_1684_Saltillo__1.jpeg" alt="Documento Original de 6" onclick="zoomImage(this.src)" oncontextmenu="return false;" draggable="false">
+            <p style="color: #888; font-size: 0.85em; font-style: italic; margin-top: 10px;">Manuscrito Original (Clic para ampliar)</p>
+        </div>
+        
+        <h2>Transcripción Paleográfica</h2>
+        <div class="transcription-box">Perfil: Bautismo de Francisco
+Descripción: Fragmento de acta de bautismo de un niño llamado Francisco, fechada el 23 de febrero de 1780.
+Transcripción:
+En veinte y tres dias del mes de febrero
+del año de mil setecientos ochenta
+Yo el Pe. Ex [...]
+Bauptice solemnemente [...]
+puse por nombre Franco [...]</div>
+    </div>
+
+    <script>
+        function zoomImage(src) {
+            document.getElementById('zoomImg').src = src;
+            document.getElementById('zoomOverlay').style.display = 'block';
+        }
+    </script>
+</body>
+</html>
