@@ -156,8 +156,9 @@ async function searchSupabase() {
     
     const queryNombres = document.getElementById('s_nombres').value.toLowerCase().trim();
     const queryApellidos = document.getElementById('s_apellidos').value.toLowerCase().trim();
+    const queryLugar = document.getElementById('s_lugar') ? document.getElementById('s_lugar').value.toLowerCase().trim() : "";
     
-    if (!queryNombres && !queryApellidos) {
+    if (!queryNombres && !queryApellidos && !queryLugar) {
         list.innerHTML = "<li style='padding:15px; color:red;'>Por favor ingrese al menos un criterio de búsqueda.</li>";
         btn.innerHTML = originalText;
         btn.disabled = false;
@@ -176,10 +177,13 @@ async function searchSupabase() {
     for (const id in data.individuals) {
         const p = data.individuals[id];
         const fullName = p.full_name.toLowerCase();
+        const birthPlace = (p.birth_place || "").toLowerCase();
+        const deathPlace = (p.death_place || "").toLowerCase();
         
         let match = true;
         if (queryNombres && !fullName.includes(queryNombres)) match = false;
         if (queryApellidos && !fullName.includes(queryApellidos)) match = false;
+        if (queryLugar && !(birthPlace.includes(queryLugar) || deathPlace.includes(queryLugar))) match = false;
         
         if (match) {
             results.push(p);

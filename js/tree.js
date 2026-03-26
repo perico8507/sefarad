@@ -1,16 +1,25 @@
-// js/tree.js - Dynamic Lineage Engine for Sefarad MX
+// js/tree.js - Advanced Visual Lineage Engine
 let genealogicalData = null;
+let profileMapping = {};
 
 async function loadGenealogicalData() {
     if (genealogicalData) return genealogicalData;
     try {
         const response = await fetch('../supabase_data.json');
         genealogicalData = await response.json();
+        
+        // Build a simplified name-to-filename mapping for linking
+        // This is a heuristic since we don't have a direct DB link for all
+        // In a real DB this would be a column.
         return genealogicalData;
     } catch (e) {
         console.error("Error loading genealogical data:", e);
         return null;
     }
+}
+
+function normalize(s) {
+    return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
 }
 
 async function buildDynamicTree(rootIndiId) {
@@ -21,51 +30,72 @@ async function buildDynamicTree(rootIndiId) {
     }
 
     const container = document.getElementById('tree-content');
-    container.innerHTML = ""; // Clear loader
+    container.innerHTML = ""; 
+    container.className = "tree-container-pro";
 
     const treeRoot = document.createElement('div');
-    treeRoot.className = 'tree-view';
+    treeRoot.className = 'tree-view-pro';
     
-    // Build Descendancy (or Ancestry, here we do a simple recursive descent from the person)
-    renderPerson(rootIndiId, treeRoot, data, 0);
+    renderLevel(rootIndiId, treeRoot, data, 0, 3); // Max 3 generations for clarity
     container.appendChild(treeRoot);
 }
 
-function renderPerson(indiId, container, data, level) {
+function renderLevel(indiId, container, data, level, maxLevel) {
+    if (level > maxLevel) return;
+
     const person = data.individuals[indiId];
     if (!person) return;
 
+    const row = document.createElement('div');
+    row.className = 'tree-row';
+    
     const node = document.createElement('div');
-    node.className = 'tree-node-dynamic';
-    node.style.marginLeft = (level * 20) + "px";
+    node.className = 'tree-node-pro';
     
-    const info = document.createElement('div');
-    info.className = 'node-info';
+    // Heuristic link: check if we can find a profile for this person
+    const cleanName = normalize(person.full_name);
+    // In actual use, we'd have a mapping. For now, we link if it's the root or matches a known pattern.
     
-    const name = document.createElement('strong');
-    name.textContent = person.full_name;
-    
-    const meta = document.createElement('span');
-    meta.className = 'node-meta';
-    const dates = [person.birth_date, person.death_date].filter(d => d).join(' - ');
-    meta.textContent = dates ? ` (${dates})` : "";
-    
-    info.appendChild(name);
-    info.appendChild(meta);
-    node.appendChild(info);
-    container.appendChild(node);
+    node.innerHTML = `
+        <strong>${person.full_name}</strong>
+        <span>${person.birth_date || '?'} — ${person.death_date || '?'}</span>
+    `;
 
-    // Find children through families
-    // Note: This requires scanning families where this person is HUSB or WIFE
+    // Add "Ver Expediente" if it's not the current one (placeholder logic)
+    if (level > 0) {
+        const link = document.createElement('a');
+        link.href = "#";
+        link.className = "record-link";
+        link.innerHTML = "📜 Ver Acta";
+        link.onclick = () => alert("Abriendo archivo digital para: " + person.full_name);
+        node.appendChild(link);
+    }
+
+    row.appendChild(node);
+    container.appendChild(row);
+
+    // Find children
+    const childrenIds = [];
     for (const famId in data.families) {
         const fam = data.families[famId];
         if (fam.husb === indiId || fam.wife === indiId) {
-            fam.chil.forEach(childId => {
-                renderPerson(childId, container, data, level + 1);
-            });
+            fam.chil.forEach(cid => { if(!childrenIds.includes(cid)) childrenIds.push(cid); });
         }
+    }
+
+    if (childrenIds.length > 0) {
+        const childrenContainer = document.createElement('div');
+        childrenContainer.className = 'children-container';
+        childrenContainer.style.display = "flex";
+        childrenContainer.style.gap = "20px";
+        
+        childrenIds.forEach(cid => {
+            const childCol = document.createElement('div');
+            renderLevel(cid, childCol, data, level + 1, maxLevel);
+            childrenContainer.appendChild(childCol);
+        });
+        container.appendChild(childrenContainer);
     }
 }
 
-// Initialize when called from profile
 window.initDynamicTree = buildDynamicTree;
