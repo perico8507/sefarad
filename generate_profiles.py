@@ -125,17 +125,15 @@ def update_index(generated_links):
     list_html += "        </ul>"
     
     # Inject into index.html
-    pattern = re.compile(r'(<div class="documents-hall"[^>]*>\s*)<ul[^>]*>.*?</ul>(\s*</div>)', re.DOTALL)
+    pattern = re.compile(r'(<div class="documents-hall"[^>]*>\s*)<ul>.*?</ul>(\s*</div>)', re.DOTALL)
     
     if pattern.search(content):
-        # We need to maintain the ul attributes if possible, but the script just replaces it.
-        # Let's use a simpler approach that just replaces the content inside the div.
         new_content = pattern.sub(rf'\g<1>{list_html}\g<2>', content)
         with open(INDEX_FILE, 'w', encoding='utf-8') as f:
             f.write(new_content)
         print("index.html updated successfully with new profile links.")
     else:
-        print("Could not find <div class=\"documents-hall\"> in index.html")
+        print("Could not find <div class=\"documents-hall\"> with a <ul> inside in index.html")
 
 if __name__ == '__main__':
     links = generate_profiles()

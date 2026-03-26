@@ -1,3 +1,19 @@
+let sefaradData = null;
+
+async function loadSefaradData() {
+    if (sefaradData) return sefaradData;
+    try {
+        const response = await fetch('supabase_data.json');
+        sefaradData = await response.text();
+        sefaradData = JSON.parse(sefaradData);
+        console.log("Sefarad Data loaded:", Object.keys(sefaradData.individuals).length, "individuals");
+        return sefaradData;
+    } catch (e) {
+        console.error("Failed to load supabase_data.json", e);
+        return null;
+    }
+}
+
 // --- 1. TAB NAVIGATION ---
 function showTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
@@ -5,10 +21,14 @@ function showTab(tabId) {
     
     document.getElementById('view-' + tabId).classList.add('active');
     document.getElementById('tab-' + tabId).classList.add('active');
+    
+    if (tabId === 'buscar') {
+        loadSefaradData();
+    }
 }
 
 // --- 2. INTERACTIVE TREE (COLLAPSE/EXPAND & PAN/ZOOM) ---
-document.addEventListener('DOMContentLoaded', () => {
+function initializeTree() {
     const treeContainer = document.getElementById('family-tree-container-div');
     if(treeContainer) {
         // Parse tree nodes to add toggle buttons and structure
@@ -19,6 +39,9 @@ document.addEventListener('DOMContentLoaded', () => {
             const children = Array.from(node.children).filter(child => child.classList.contains('tree-node'));
             
             if(children.length > 0) {
+                // Skip if already has a toggle
+                if (node.querySelector('.tree-node-toggle')) return;
+
                 // Create toggle button
                 const toggleBtn = document.createElement('span');
                 toggleBtn.className = 'tree-node-toggle';
@@ -64,19 +87,22 @@ document.addEventListener('DOMContentLoaded', () => {
         let isDragging = false;
         let startX, startY, scrollLeft, scrollTop;
 
-        treeContainer.addEventListener('mousedown', (e) => {
+        treeContainer.onmousedown = (e) => {
             isDragging = true;
             startX = e.pageX - treeContainer.offsetLeft;
             startY = e.pageY - treeContainer.offsetTop;
             scrollLeft = treeContainer.scrollLeft;
             scrollTop = treeContainer.scrollTop;
-        });
+            treeContainer.style.cursor = 'grabbing';
+        };
         
-        treeContainer.addEventListener('mouseleave', () => { isDragging = false; });
-        treeContainer.addEventListener('mouseup', () => { isDragging = false; });
+        window.onmouseup = () => { 
+            isDragging = false; 
+            if(treeContainer) treeContainer.style.cursor = 'grab';
+        };
         
-        treeContainer.addEventListener('mousemove', (e) => {
-            if(!isDragging) return;
+        window.onmousemove = (e) => {
+            if(!isDragging || !treeContainer) return;
             e.preventDefault();
             const x = e.pageX - treeContainer.offsetLeft;
             const y = e.pageY - treeContainer.offsetTop;
@@ -84,11 +110,14 @@ document.addEventListener('DOMContentLoaded', () => {
             const walkY = (y - startY) * 1.5;
             treeContainer.scrollLeft = scrollLeft - walkX;
             treeContainer.scrollTop = scrollTop - walkY;
-        });
+        };
     }
-});
+}
 
-// --- 3. SUPABASE MOCK FUNCTIONS ---
+document.addEventListener('DOMContentLoaded', initializeTree);
+window.initializeTree = initializeTree;
+
+// --- 3. SUPABASE & DATA FUNCTIONS ---
 async function loginWithSupabase() {
     const email = document.getElementById('loginEmail').value;
     const pass = document.getElementById('loginPass').value;
@@ -97,10 +126,7 @@ async function loginWithSupabase() {
         alert("Por favor ingresa credenciales."); return;
     }
     
-    // Integración real con auth de Supabase
     try {
-        // We assume supabase is available globally or via module
-        // For simplicity in this refactor, we check both
         const supabaseClient = window.supabase;
         if(supabaseClient) {
             const { data, error } = await supabaseClient.auth.signInWithPassword({
@@ -108,63 +134,114 @@ async function loginWithSupabase() {
             });
             if(error) throw error;
             alert("Sesión iniciada correctamente.");
-            document.getElementById('loginModal').style.display='none';
-            // Cambiar UI de usuario
-            document.querySelector('.user-menu').innerHTML = `<span style="font-weight:bold; color:var(--text-main);">👨‍💻 ${email}</span> <a href="#" onclick="supabase.auth.signOut(); location.reload();" style="color:red; font-size:0.9rem; text-decoration:none;">Salir</a>`;
+            location.reload();
         } else {
-            console.warn("Supabase client no definido globalmente aún. Mock mode.");
-            alert("Simulación de sesión iniciada para " + email);
-            document.getElementById('loginModal').style.display='none';
+            alert("Sistema de autenticación no disponible.");
         }
     } catch(e) {
-        alert("Error de inicio de sesión: " + e.message);
+        alert("Error: " + e.message);
     }
 }
 
 async function searchSupabase() {
     const btn = document.querySelector('#view-buscar .btn');
-    btn.innerHTML = "Buscando...";
+    const originalText = btn.innerHTML;
+    btn.innerHTML = "Consultando Archivo...";
+    btn.disabled = true;
+
     const resDiv = document.getElementById('search-results');
+    const list = document.getElementById('results-list');
+    list.innerHTML = "";
     resDiv.style.display = "block";
     
-    const n = document.getElementById('s_nombres').value;
-    const a = document.getElementById('s_apellidos').value;
+    const queryNombres = document.getElementById('s_nombres').value.toLowerCase().trim();
+    const queryApellidos = document.getElementById('s_apellidos').value.toLowerCase().trim();
     
-    setTimeout(() => {
-        const list = document.getElementById('results-list');
-        list.innerHTML = `
-            <li style="padding:15px; border-bottom:1px solid #eee;">
-                <strong style="color:var(--fs-blue); font-size:1.1rem;">${n || 'Francisco'} ${a || 'García'}</strong><br>
-                <span style="color:var(--text-muted); font-size:0.9rem;">Nacimiento: aprox 1650, Nuevo Reino de León • Defunción: Saltillo, Coahuila</span><br>
-                <a href="#" style="font-size:0.85rem; font-weight:bold; margin-top:5px; display:inline-block;">Ver documento original →</a>
-            </li>
-            <li style="padding:15px; border-bottom:1px solid #eee;">
-                <strong style="color:var(--fs-blue); font-size:1.1rem;">${n || 'María'} ${a || 'Guajardo'}</strong><br>
-                <span style="color:var(--text-muted); font-size:0.9rem;">Nacimiento: aprox 1768 • Cónyuge: Jose Antonio Garcia</span><br>
-                <a href="#" style="font-size:0.85rem; font-weight:bold; margin-top:5px; display:inline-block;">Ver documento original →</a>
-            </li>
-        `;
-        btn.innerHTML = "Buscar Registros";
-    }, 800);
+    if (!queryNombres && !queryApellidos) {
+        list.innerHTML = "<li style='padding:15px; color:red;'>Por favor ingrese al menos un criterio de búsqueda.</li>";
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        return;
+    }
+
+    const data = await loadSefaradData();
+    if (!data) {
+        list.innerHTML = "<li style='padding:15px; color:red;'>Error al cargar el archivo de datos.</li>";
+        btn.innerHTML = originalText;
+        btn.disabled = false;
+        return;
+    }
+
+    const results = [];
+    for (const id in data.individuals) {
+        const p = data.individuals[id];
+        const fullName = p.full_name.toLowerCase();
+        
+        let match = true;
+        if (queryNombres && !fullName.includes(queryNombres)) match = false;
+        if (queryApellidos && !fullName.includes(queryApellidos)) match = false;
+        
+        if (match) {
+            results.push(p);
+            if (results.length >= 50) break; // Limit results
+        }
+    }
+
+    if (results.length === 0) {
+        list.innerHTML = "<li style='padding:15px;'>No se encontraron registros que coincidan con los criterios.</li>";
+    } else {
+        results.forEach(p => {
+            const li = document.createElement('li');
+            li.style.padding = "20px";
+            li.style.borderBottom = "1px solid var(--border-gold)";
+            li.style.background = "white";
+            li.style.marginBottom = "10px";
+            
+            const birth = p.birth_date ? `Nacimiento: ${p.birth_date}` : "";
+            const death = p.death_date ? `Defunción: ${p.death_date}` : "";
+            const place = p.birth_place || p.death_place || "Origen: Noreste de México";
+            
+            li.innerHTML = `
+                <strong style="color:var(--text-dark); font-size:1.2rem; font-family:'Cinzel', serif;">${p.full_name}</strong><br>
+                <span style="color:var(--text-muted); font-size:0.9rem;">${birth} ${death ? ' • ' + death : ''}</span><br>
+                <span style="color:var(--text-muted); font-size:0.9rem; font-style:italic;">${place}</span><br>
+                <a href="#" onclick="alert('Funcionalidad de perfil detallado en desarrollo para este registro.')" style="font-size:0.85rem; font-weight:bold; margin-top:10px; display:inline-block; color:var(--primary-gold-dim);">Ver Expediente Completo →</a>
+            `;
+            list.appendChild(li);
+        });
+    }
+
+    btn.innerHTML = originalText;
+    btn.disabled = false;
 }
 
-function uploadToSupabase(e) {
+async function uploadToSupabase(e) {
     const file = e.target.files[0];
-    if(file) {
-        alert("Preparando para subir '" + file.name + "' a Supabase Storage (bucket: memories)...\n\nLa carga real requiere que el usuario esté autenticado y la tabla/bucket creados.");
-        // Fake UI update
-        const grid = document.getElementById('memories-grid');
-        grid.innerHTML += `
-        <div class="gallery-card">
-            <div style="height:150px; background:#e0f7fa; border-radius:4px; margin-bottom:15px; display:flex; align-items:center; justify-content:center; color:#006064; font-weight:bold;">[Nuevo Archivo]</div>
-            <h3>${file.name}</h3>
-            <p>Agregado justo ahora</p>
-        </div>`;
+    if(!file) return;
+
+    const supabaseClient = window.supabase;
+    if(!supabaseClient) {
+        alert("Cliente Supabase no disponible.");
+        return;
+    }
+
+    // Check auth
+    const { data: { user } } = await supabaseClient.auth.getUser();
+    if(!user) {
+        alert("Debe iniciar sesión para subir archivos al repositorio institucional.");
+        document.getElementById('loginModal').style.display = 'flex';
+        return;
+    }
+
+    const fileName = `${Date.now()}_${file.name}`;
+    const { data, error } = await supabaseClient.storage
+        .from('memories')
+        .upload(fileName, file);
+
+    if (error) {
+        alert("Error al subir archivo: " + error.message);
+    } else {
+        alert("Documento resguardado exitosamente en la bóveda digital.");
+        location.reload();
     }
 }
-
-// Export functions to window to keep onclick handlers working
-window.showTab = showTab;
-window.loginWithSupabase = loginWithSupabase;
-window.searchSupabase = searchSupabase;
-window.uploadToSupabase = uploadToSupabase;

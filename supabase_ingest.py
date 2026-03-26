@@ -4,7 +4,7 @@ import json
 import difflib
 
 # Configuration
-GEDCOM_FILE = 'Francisco Javier García Gaona.ged'
+GEDCOM_FILE = "/root/sefarad/Francisco Javier García Gaona.ged"
 TRANS_DIR = 'transcripciones/'
 MEDIA_EXTS = ('.jpeg', '.jpg', '.png', '.pdf')
 
