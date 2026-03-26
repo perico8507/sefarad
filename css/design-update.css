@@ -17,7 +17,6 @@ body {
     font-family: 'Libre Baskerville', serif;
 }
 
-/* INSTITUTIONAL HEADER */
 header {
     background-color: var(--primary-dark) !important;
     border-bottom: 3px solid var(--primary-gold) !important;
@@ -54,89 +53,85 @@ header {
     font-size: 0.8rem;
 }
 
-/* HERO SECTION UPDATED */
+/* PORTADA DE ALTO IMPACTO DEFINITIVA */
 .hero {
-    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Fundacion_de_Monterrey_por_Diego_de_Montemayor_1596.jpg') center/cover !important;
-    border-bottom: 1px solid var(--primary-gold);
-    padding: 100px 20px !important;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                url('../imagen-portada-pagina-de-inicio.jpg') center/cover no-repeat !important;
+    border-bottom: 5px solid var(--primary-gold);
+    padding: 0 20px !important;
+    margin-bottom: 80px;
+    text-shadow: 0 4px 10px rgba(0,0,0,1);
 }
 
 .hero h2 {
+    font-size: 4.5rem !important;
     font-family: 'Cinzel', serif;
     font-weight: 700 !important;
-    letter-spacing: 4px;
+    letter-spacing: 12px !important;
     text-transform: uppercase;
     color: var(--primary-gold) !important;
+    margin-bottom: 20px;
+    text-align: center;
 }
 
 .hero p {
     font-family: 'Libre Baskerville', serif;
     font-style: italic;
-    max-width: 900px !important;
+    font-size: 1.5rem !important;
+    max-width: 1000px !important;
+    color: #eaddd0;
+    text-align: center;
 }
 
-/* CARDS - HISTORICAL STYLE */
-.gallery-card {
+.hero::after {
+    content: '⚜️';
+    font-size: 2.5rem;
+    color: var(--primary-gold);
+    margin-top: 40px;
+    opacity: 0.8;
+}
+
+/* ÁRBOL FAMILIAR - REDISEÑO INSTITUCIONAL */
+.family-tree-container {
+    background: var(--bg-cream) !important;
+    border: 3px double var(--primary-gold) !important;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.15) !important;
+    padding: 60px !important;
+    background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png') !important;
+    overflow: auto;
+    max-height: 800px;
+}
+
+.tree-node {
+    border: 1px solid var(--primary-gold-dim) !important;
     background: white !important;
-    border: 1px solid var(--border-gold) !important;
+    padding: 15px !important;
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.1) !important;
     border-radius: 0 !important;
-    box-shadow: 5px 5px 15px rgba(0,0,0,0.05) !important;
-    position: relative;
+    transition: all 0.3s ease;
 }
 
-.gallery-card::after {
-    content: '';
-    position: absolute;
-    top: 5px; left: 5px; right: 5px; bottom: 5px;
-    border: 1px solid rgba(139, 115, 85, 0.1);
-    pointer-events: none;
+.tree-node:hover {
+    border-color: var(--primary-gold) !important;
+    transform: translateY(-5px);
+    box-shadow: 10px 10px 25px rgba(0,0,0,0.2) !important;
 }
 
-.gallery-card h3 {
-    font-family: 'Cinzel', serif;
+.tree-node h4 {
+    font-family: 'Cinzel', serif !important;
     color: var(--text-dark) !important;
-    border-bottom: 1px solid var(--primary-gold-dim);
-    padding-bottom: 10px;
+    border-bottom: 1px solid var(--primary-gold-dim) !important;
+    margin-bottom: 10px !important;
+    font-size: 1.1rem !important;
 }
 
-.btn {
-    background: var(--primary-dark) !important;
-    color: var(--primary-gold) !important;
-    font-family: 'Cinzel', serif;
-    border: 1px solid var(--primary-gold) !important;
-    border-radius: 0 !important;
-    text-transform: uppercase;
-    letter-spacing: 1px;
-    transition: all 0.3s;
-}
-
-.btn:hover {
-    background: var(--primary-gold) !important;
-    color: var(--primary-dark) !important;
-}
-
-/* TREE CONTAINER */
-#family-tree-container-div {
-    background: white !important;
-    border: 1px solid var(--primary-gold) !important;
-    border-radius: 0 !important;
-}
-
-.tree-node > strong {
-    color: var(--text-dark) !important;
+.tree-node p {
+    font-size: 0.85rem !important;
+    color: var(--text-muted) !important;
     font-family: 'Libre Baskerville', serif !important;
-}
-
-.tree-node-toggle {
-    border-color: var(--primary-gold-dim) !important;
-    color: var(--primary-gold-dim) !important;
-    border-radius: 0 !important;
-}
-
-/* FOOTER */
-.footer {
-    background: var(--primary-dark) !important;
-    color: #8b7355 !important;
-    border-top: 2px solid var(--primary-gold) !important;
-    font-family: 'Cinzel', serif;
 }

@@ -124,16 +124,27 @@ def update_index(generated_links):
         list_html += f'            <li><a href="perfiles/{html_filename}">Expediente: {display_name}</a><br><span style="font-size: 0.8em; color: #888;">Archivo Sefarad MX</span></li>\n'
     list_html += "        </ul>"
     
-    # Inject into index.html
-    pattern = re.compile(r'(<div class="documents-hall"[^>]*>\s*)<ul>.*?</ul>(\s*</div>)', re.DOTALL)
-    
-    if pattern.search(content):
-        new_content = pattern.sub(rf'\g<1>{list_html}\g<2>', content)
+    # Inject into index.html using placeholder
+    placeholder = "<!-- LISTA_EXPEDIENTES -->"
+    if placeholder in content:
+        # Replace the entire div content or just the placeholder
+        list_container = f'<div class="documents-hall"><ul>\n{list_html}\n</ul></div>'
+        # We find the old div and replace it, or just replace placeholder
+        # To be safe and simple, let's just replace the placeholder if we use it correctly
+        new_content = content.replace(placeholder, list_html)
         with open(INDEX_FILE, 'w', encoding='utf-8') as f:
             f.write(new_content)
-        print("index.html updated successfully with new profile links.")
+        print("index.html updated successfully via placeholder.")
     else:
-        print("Could not find <div class=\"documents-hall\"> with a <ul> inside in index.html")
+        # Fallback to regex if placeholder not found
+        pattern = re.compile(r'(<div class="documents-hall"[^>]*>\s*)<ul>.*?</ul>(\s*</div>)', re.DOTALL)
+        if pattern.search(content):
+            new_content = pattern.sub(rf'\g<1><ul>\n{list_html}\n</ul>\g<2>', content)
+            with open(INDEX_FILE, 'w', encoding='utf-8') as f:
+                f.write(new_content)
+            print("index.html updated successfully via regex.")
+        else:
+            print("Could not find injection point in index.html")
 
 if __name__ == '__main__':
     links = generate_profiles()
