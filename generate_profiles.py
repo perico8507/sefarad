@@ -33,6 +33,7 @@ TEMPLATE = """<!DOCTYPE html>
             line-height: 1.7;
             background-image: radial-gradient(circle at center, #1a1816 0%, #0d0c0b 100%);
             background-attachment: fixed;
+            user-select: none; /* Prevent text selection to limit copying */
         }}
         
         .container {{
@@ -92,6 +93,16 @@ TEMPLATE = """<!DOCTYPE html>
             border: 3px solid #000;
             box-shadow: 0 15px 30px rgba(0,0,0,0.8);
             filter: sepia(20%);
+            cursor: zoom-in;
+            pointer-events: auto; /* Allow click to zoom */
+        }}
+        
+        /* Disable downloading images globally in this document */
+        img {{
+            -webkit-user-drag: none;
+            -khtml-user-drag: none;
+            -moz-user-drag: none;
+            -o-user-drag: none;
         }}
         
         .transcription-box {{
@@ -103,10 +114,35 @@ TEMPLATE = """<!DOCTYPE html>
             white-space: pre-wrap;
             margin-top: 30px;
             box-shadow: inset 0 0 20px rgba(0,0,0,1);
+            user-select: text; /* Allow reading transcription */
+        }}
+
+        /* Simple Modal Zoom */
+        .zoom-overlay {{
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.95);
+            z-index: 9999;
+            text-align: center;
+            overflow: auto;
+            cursor: zoom-out;
+        }}
+        .zoom-overlay img {{
+            max-width: 95%;
+            margin-top: 2vh;
+            margin-bottom: 2vh;
+            border: 2px solid var(--accent-gold);
+            box-shadow: 0 0 50px #000;
+            pointer-events: none; /* Prevent right click inside modal */
         }}
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
+    <div class="zoom-overlay" id="zoomOverlay" onclick="this.style.display='none'">
+        <img id="zoomImg" src="" oncontextmenu="return false;" draggable="false">
+    </div>
+
     <div class="container">
         <a href="../index.html" class="back-link">← Volver a la Galería</a>
         
@@ -117,6 +153,13 @@ TEMPLATE = """<!DOCTYPE html>
         <h2>Transcripción del Documento</h2>
         <div class="transcription-box">{transcription}</div>
     </div>
+
+    <script>
+        function zoomImage(src) {{
+            document.getElementById('zoomImg').src = src;
+            document.getElementById('zoomOverlay').style.display = 'block';
+        }}
+    </script>
 </body>
 </html>
 """
@@ -172,8 +215,8 @@ def generate_profiles():
         if best_match:
             image_html = f'''
         <div class="document-container">
-            <img src="../assets/actas/{best_match}" alt="Documento Original de {display_name}">
-            <p style="color: #888; font-size: 0.85em; font-style: italic; margin-top: 10px;">Manuscrito Original</p>
+            <img src="../assets/actas/{best_match}" alt="Documento Original de {display_name}" onclick="zoomImage(this.src)" oncontextmenu="return false;" draggable="false">
+            <p style="color: #888; font-size: 0.85em; font-style: italic; margin-top: 10px;">Manuscrito Original (Clic para ampliar)</p>
         </div>'''
         
         html_content = TEMPLATE.format(
