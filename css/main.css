@@ -1,27 +1,34 @@
+@import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Roboto:wght@300;400;500;700&display=swap');
+
 :root {
-    --fs-blue: #0056b3;
-    --fs-green: #3b8e4b;
-    --bg-light: #f5f5f5;
-    --text-main: #333333;
-    --text-muted: #666666;
-    --card-bg: #ffffff;
-    --border-color: #e0e0e0;
+    --primary-dark: #1a1816;
+    --primary-gold: #d4af37;
+    --primary-gold-dim: #8b7355;
+    --bg-cream: #faf7f2;
+    --text-dark: #2c1e1a;
+    --text-muted: #6b5a50;
+    --border-gold: rgba(212, 175, 55, 0.3);
+}
+
+* {
+    box-sizing: border-box;
 }
 
 body {
-    font-family: 'Roboto', sans-serif;
-    background-color: var(--bg-light);
-    color: var(--text-main);
+    background-color: var(--bg-cream);
+    background-image: url('https://www.transparenttextures.com/patterns/natural-paper.png');
+    color: var(--text-dark);
+    font-family: 'Libre Baskerville', serif;
     margin: 0;
     padding: 0;
     line-height: 1.6;
 }
 
-/* FAMILYSEARCH STYLE HEADER */
+/* HEADER */
 header {
-    background-color: #ffffff;
-    border-bottom: 4px solid var(--fs-green);
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    background-color: var(--primary-dark);
+    border-bottom: 3px solid var(--primary-gold);
+    color: white;
     position: sticky;
     top: 0;
     z-index: 1000;
@@ -37,19 +44,19 @@ header {
 }
 
 header h1 {
-    font-size: 1.8rem;
+    font-family: 'Cinzel', serif;
+    color: var(--primary-gold);
+    font-size: 1.5rem;
     margin: 0;
-    font-weight: 700;
-    color: var(--fs-green);
-    letter-spacing: 1px;
+    text-transform: uppercase;
+    letter-spacing: 2px;
     display: flex;
     align-items: center;
     gap: 10px;
 }
 
 header h1::before {
-    content: '🌲';
-    font-size: 1.5rem;
+    content: '⚜️';
 }
 
 .header-nav {
@@ -58,100 +65,135 @@ header h1::before {
 }
 
 .header-nav a {
-    color: var(--text-main);
+    color: #eaddd0;
     text-decoration: none;
-    font-weight: 500;
-    font-size: 0.95rem;
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem;
+    letter-spacing: 1px;
+    padding: 10px 15px;
+    border-bottom: 3px solid transparent;
+    transition: all 0.2s;
+    cursor: pointer;
 }
 
-.header-nav a:hover {
-    color: var(--fs-blue);
+.header-nav a:hover, .header-nav a.active {
+    color: var(--primary-gold);
+    border-bottom-color: var(--primary-gold);
 }
 
-/* HERO SECTION */
+.user-menu .login-btn {
+    color: var(--primary-gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.8rem;
+    cursor: pointer;
+}
+
+/* PORTADA DE ALTO IMPACTO DEFINITIVA */
 .hero {
-    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)), url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Fundacion_de_Monterrey_por_Diego_de_Montemayor_1596.jpg') center/cover;
+    height: 90vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), 
+                url('https://upload.wikimedia.org/wikipedia/commons/4/4e/Fundacion_de_Monterrey_por_Diego_de_Montemayor_1596.jpg') center/cover no-repeat;
+    border-bottom: 5px solid var(--primary-gold);
+    padding: 0 20px;
+    margin-bottom: 80px;
+    text-shadow: 0 4px 10px rgba(0,0,0,1);
     color: white;
-    padding: 80px 20px;
     text-align: center;
-    margin-bottom: 40px;
 }
 
 .hero h2 {
-    font-size: 2.5rem;
-    margin-bottom: 15px;
-    font-weight: 300;
-    color: white;
+    font-size: 4.5rem;
+    font-family: 'Cinzel', serif;
+    font-weight: 700;
+    letter-spacing: 12px;
+    text-transform: uppercase;
+    color: var(--primary-gold);
+    margin: 0 0 20px 0;
 }
 
 .hero p {
-    font-size: 1.2rem;
-    max-width: 800px;
-    margin: 0 auto;
-    opacity: 0.9;
+    font-family: 'Libre Baskerville', serif;
+    font-style: italic;
+    font-size: 1.5rem;
+    max-width: 1000px;
+    color: #eaddd0;
+    margin: 0;
 }
 
+.hero::after {
+    content: '⚜️';
+    font-size: 2.5rem;
+    color: var(--primary-gold);
+    margin-top: 40px;
+    opacity: 0.8;
+}
+
+/* CONTAINER */
 .container {
-    max-width: 1200px;
+    max-width: 1100px;
     margin: 0 auto;
-    padding: 0 20px 60px;
+    padding: 0 20px 100px;
 }
 
-/* TYPOGRAPHY */
-h2, h3 {
-    color: var(--text-main);
-    font-weight: 500;
-}
-
-h2 {
-    font-size: 1.8rem;
-    margin-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
-    padding-bottom: 10px;
+/* SECCIONES DE VALOR */
+.exhibit-section-alt {
+    background: white;
+    padding: 60px;
+    border: 1px solid var(--primary-gold);
+    box-shadow: 20px 20px 0 rgba(212, 175, 55, 0.1);
+    margin-bottom: 100px;
 }
 
 /* CARDS & GRIDS */
 .gallery-grid {
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 20px;
-    margin-bottom: 50px;
+    gap: 30px;
+    margin-bottom: 80px;
 }
 
 .gallery-card {
-    background: var(--card-bg);
-    padding: 25px;
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-    transition: box-shadow 0.2s;
+    background: white;
+    padding: 40px 30px;
+    border: 1px solid var(--border-gold);
+    box-shadow: 5px 5px 15px rgba(0,0,0,0.05);
+    position: relative;
+    text-align: center;
+    transition: all 0.3s ease;
+}
+
+.gallery-card::after {
+    content: '';
+    position: absolute;
+    top: 5px; left: 5px; right: 5px; bottom: 5px;
+    border: 1px solid rgba(139, 115, 85, 0.1);
+    pointer-events: none;
 }
 
 .gallery-card:hover {
-    box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+    transform: translateY(-10px);
+    box-shadow: 15px 15px 30px rgba(0,0,0,0.1);
+    border-color: var(--primary-gold);
 }
 
 .gallery-card h3 {
-    font-size: 1.2rem;
+    font-family: 'Cinzel', serif;
+    color: var(--text-dark);
+    border-bottom: 1px solid var(--primary-gold-dim);
+    padding-bottom: 15px;
     margin-top: 0;
-    margin-bottom: 5px;
-    color: var(--fs-blue);
-}
-
-.gallery-card p {
-    font-size: 0.95rem;
-    color: var(--text-muted);
-    margin-bottom: 10px;
 }
 
 /* DOCUMENTS GALLERY */
 .documents-hall {
-    background: var(--card-bg);
-    border: 1px solid var(--border-color);
-    border-radius: 8px;
-    padding: 30px;
-    margin: 30px 0;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05);
+    background: white;
+    border: 1px solid var(--primary-gold);
+    padding: 40px;
+    margin: 40px 0;
 }
 
 .documents-hall ul {
@@ -159,178 +201,116 @@ h2 {
     padding: 0;
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-    gap: 15px;
+    gap: 20px;
 }
 
 .documents-hall li {
-    background: var(--bg-light);
     padding: 15px;
-    border-radius: 6px;
-    border-left: 4px solid var(--fs-blue);
-    font-size: 0.95rem;
+    border-left: 4px solid var(--primary-gold-dim);
+    background: var(--bg-cream);
+    transition: all 0.2s;
 }
 
 .documents-hall li:hover {
-    background: #e9ecef;
+    border-left-color: var(--primary-gold);
+    background: #fff;
+    transform: translateX(5px);
 }
 
-a {
-    color: var(--fs-blue);
+.documents-hall a {
+    color: var(--primary-dark);
     text-decoration: none;
+    font-weight: bold;
 }
 
-a:hover {
-    text-decoration: underline;
+/* BUTTONS */
+.btn {
+    background: var(--primary-dark);
+    color: var(--primary-gold);
+    font-family: 'Cinzel', serif;
+    border: 1px solid var(--primary-gold);
+    padding: 12px 24px;
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    transition: all 0.3s;
+}
+
+.btn:hover {
+    background: var(--primary-gold);
+    color: var(--primary-dark);
 }
 
 /* FOOTER */
 .footer {
-    background: #ffffff;
-    color: var(--text-muted);
+    background: var(--primary-dark);
+    color: #8b7355;
     text-align: center;
-    padding: 30px 20px;
-    border-top: 1px solid var(--border-color);
-    font-size: 0.9rem;
+    padding: 60px 20px;
+    font-family: 'Cinzel', serif;
+    border-top: 2px solid var(--primary-gold);
+    letter-spacing: 1px;
 }
 
-/* OVERRIDE FOR INJECTED CONTENT TO FIT LIGHT THEME */
-#transcripciones, #family-tree-container-div {
-    background: #ffffff !important;
-    border-color: var(--border-color) !important;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.05) !important;
-    color: var(--text-main) !important;
-    border-radius: 8px;
-}
-
-.tree-node > strong {
-    color: var(--fs-blue) !important;
-    font-family: 'Roboto', sans-serif !important;
-}
-
-.tree-node > span {
-    color: var(--text-muted) !important;
-}
-
-.tree-node {
-    border-left-color: #cccccc !important;
-}
-
-.tree-node > div[style*="background-color: #0056b3;"] {
-    background-color: #cccccc !important;
-}
-
-.exhibit-section {
-    display: none; /* Hide the old dark hero section since we have a new one */
-}
-
-/* INTERACTIVE TABS */
+/* TABS */
 .tab-content {
     display: none;
-    animation: fadeIn 0.3s ease;
+    animation: fadeIn 0.4s ease;
 }
 .tab-content.active {
     display: block;
 }
 @keyframes fadeIn {
-    from { opacity: 0; }
-    to { opacity: 1; }
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
 }
 
-.header-nav a {
-    cursor: pointer;
-    padding: 10px 15px;
-    border-bottom: 3px solid transparent;
-    transition: all 0.2s;
-}
-.header-nav a:hover, .header-nav a.active {
-    color: var(--fs-blue);
-    border-bottom-color: var(--fs-blue);
+/* FAMILY TREE OVERRIDES */
+#family-tree-container-div {
+    background: white !important;
+    border: 1px solid var(--primary-gold) !important;
+    padding: 40px !important;
 }
 
-/* INTERACTIVE TREE */
-.family-tree-container {
-    cursor: grab;
-    position: relative;
-}
-.family-tree-container:active {
-    cursor: grabbing;
-}
 .tree-node-toggle {
+    border: 1px solid var(--primary-gold-dim) !important;
+    color: var(--primary-gold-dim) !important;
+    background: #fff !important;
     cursor: pointer;
     display: inline-block;
-    width: 16px;
-    height: 16px;
+    width: 18px;
+    height: 18px;
     text-align: center;
-    line-height: 14px;
-    border: 1px solid var(--border-color);
-    background: #fff;
-    border-radius: 3px;
-    margin-right: 5px;
-    font-weight: bold;
-    color: var(--fs-blue);
-    user-select: none;
-}
-.tree-children {
-    transition: max-height 0.3s ease-out, opacity 0.3s ease-out;
-    overflow: hidden;
-}
-.tree-children.collapsed {
-    max-height: 0 !important;
-    opacity: 0;
-    margin: 0 !important;
-    padding: 0 !important;
-    border: none !important;
+    line-height: 16px;
+    margin-right: 8px;
 }
 
-/* SEARCH & MEMORIES PANELS */
-.search-panel, .memories-panel {
-    background: #fff;
-    padding: 30px;
-    border-radius: 8px;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
-    margin-top: 20px;
-}
-.search-form input, .search-form select {
-    width: 100%;
-    padding: 12px;
-    margin: 8px 0 20px;
-    border: 1px solid var(--border-color);
-    border-radius: 4px;
-    box-sizing: border-box;
-}
-.btn {
-    background: var(--fs-blue);
-    color: white;
-    border: none;
-    padding: 12px 24px;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-    font-weight: 500;
-}
-.btn:hover {
-    background: #004494;
-}
-
-/* LOGIN MODAL */
+/* MODALS */
 .modal-overlay {
     position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-    background: rgba(0,0,0,0.5); z-index: 2000;
+    background: rgba(0,0,0,0.8); z-index: 2000;
     display: none; align-items: center; justify-content: center;
 }
 .modal-content {
-    background: #fff; padding: 40px; border-radius: 8px;
-    width: 100%; max-width: 400px; box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+    background: #fff; padding: 50px; border: 2px solid var(--primary-gold);
+    width: 100%; max-width: 450px;
     position: relative;
 }
 .modal-close {
     position: absolute; top: 15px; right: 20px; cursor: pointer;
-    font-size: 1.5rem; color: #888;
+    font-size: 1.8rem; color: var(--primary-gold-dim);
 }
 
-.user-menu {
-    display: flex; align-items: center; gap: 15px;
+/* SEARCH PANEL */
+.search-panel {
+    background: white;
+    padding: 50px;
+    border: 1px solid var(--primary-gold);
 }
-.user-menu .login-btn {
-    color: var(--fs-blue); font-weight: 500; cursor: pointer;
+.search-form input {
+    width: 100%;
+    padding: 15px;
+    margin: 10px 0 25px;
+    border: 1px solid var(--primary-gold-dim);
+    font-family: 'Roboto', sans-serif;
 }
