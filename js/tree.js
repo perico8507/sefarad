@@ -1,101 +1,92 @@
-// js/tree.js - Advanced Visual Lineage Engine
+// js/tree.js - Gramps-Style Pedigree Engine
 let genealogicalData = null;
-let profileMapping = {};
+let profileMap = null;
 
-async function loadGenealogicalData() {
-    if (genealogicalData) return genealogicalData;
-    try {
-        const response = await fetch('../supabase_data.json');
-        genealogicalData = await response.json();
-        
-        // Build a simplified name-to-filename mapping for linking
-        // This is a heuristic since we don't have a direct DB link for all
-        // In a real DB this would be a column.
-        return genealogicalData;
-    } catch (e) {
-        console.error("Error loading genealogical data:", e);
-        return null;
-    }
+async function loadData() {
+    if (genealogicalData && profileMap) return;
+    const [gRes, mRes] = await Promise.all([
+        fetch('../supabase_data.json'),
+        fetch('../profile_map.json')
+    ]);
+    genealogicalData = await gRes.json();
+    profileMap = await mRes.json();
 }
 
 function normalize(s) {
+    if (!s) return "";
     return s.toLowerCase().normalize("NFD").replace(/[\u0300-\u036f]/g, "").replace(/[^a-z0-9]/g, "");
 }
 
-async function buildDynamicTree(rootIndiId) {
-    const data = await loadGenealogicalData();
-    if (!data || !data.individuals[rootIndiId]) {
-        document.getElementById('tree-content').innerHTML = "<p>Expediente genealógico no vinculado.</p>";
+async function buildDynamicTree(rootId) {
+    await loadData();
+    const container = document.getElementById('tree-content');
+    container.innerHTML = "";
+    container.className = "pedigree-container";
+
+    const person = genealogicalData.individuals[rootId];
+    if (!person) {
+        container.innerHTML = "<p>Expediente genealógico no disponible.</p>";
         return;
     }
 
-    const container = document.getElementById('tree-content');
-    container.innerHTML = ""; 
-    container.className = "tree-container-pro";
-
-    const treeRoot = document.createElement('div');
-    treeRoot.className = 'tree-view-pro';
+    const chart = document.createElement('div');
+    chart.className = "pedigree-chart";
     
-    renderLevel(rootIndiId, treeRoot, data, 0, 3); // Max 3 generations for clarity
-    container.appendChild(treeRoot);
+    // Current Person Node
+    const rootNode = createNode(rootId, true);
+    chart.appendChild(rootNode);
+
+    // Render Ancestors (Simplified FamilySearch logic)
+    const parents = findParents(rootId);
+    if (parents.husb || parents.wife) {
+        const ancestorsCol = document.createElement('div');
+        ancestorsCol.style.display = "flex";
+        ancestorsCol.style.flexDirection = "column";
+        ancestorsCol.style.gap = "40px";
+        
+        if (parents.husb) ancestorsCol.appendChild(createNode(parents.husb));
+        if (parents.wife) ancestorsCol.appendChild(createNode(parents.wife));
+        
+        chart.appendChild(ancestorsCol);
+    }
+
+    container.appendChild(chart);
+    
+    // Pan capability
+    let isDown = false; let startX; let scrollLeft;
+    container.addEventListener('mousedown', (e) => { isDown = true; startX = e.pageX - container.offsetLeft; scrollLeft = container.scrollLeft; });
+    container.addEventListener('mouseleave', () => { isDown = false; });
+    container.addEventListener('mouseup', () => { isDown = false; });
+    container.addEventListener('mousemove', (e) => { if(!isDown) return; e.preventDefault(); const x = e.pageX - container.offsetLeft; const walk = (x - startX) * 2; container.scrollLeft = scrollLeft - walk; });
 }
 
-function renderLevel(indiId, container, data, level, maxLevel) {
-    if (level > maxLevel) return;
+function createNode(indiId, isRoot = false) {
+    const p = genealogicalData.individuals[indiId];
+    if (!p) return document.createElement('div');
 
-    const person = data.individuals[indiId];
-    if (!person) return;
+    const el = document.createElement('div');
+    el.className = `pedigree-node ${isRoot ? 'root-node' : ''}`;
+    
+    const clean = normalize(p.full_name);
+    const profileUrl = profileMap[clean] ? `../perfiles/${profileMap[clean]}` : null;
 
-    const row = document.createElement('div');
-    row.className = 'tree-row';
-    
-    const node = document.createElement('div');
-    node.className = 'tree-node-pro';
-    
-    // Heuristic link: check if we can find a profile for this person
-    const cleanName = normalize(person.full_name);
-    // In actual use, we'd have a mapping. For now, we link if it's the root or matches a known pattern.
-    
-    node.innerHTML = `
-        <strong>${person.full_name}</strong>
-        <span>${person.birth_date || '?'} — ${person.death_date || '?'}</span>
+    el.innerHTML = `
+        <div class="gender-indicator gender-${p.gender}"></div>
+        <strong>${p.full_name}</strong>
+        <span>${p.birth_date || '?'} — ${p.death_date || '?'}</span>
+        ${profileUrl && !isRoot ? `<a href="${profileUrl}" class="pedigree-link">📜 Ver Acta</a>` : ''}
     `;
+    return el;
+}
 
-    // Add "Ver Expediente" if it's not the current one (placeholder logic)
-    if (level > 0) {
-        const link = document.createElement('a');
-        link.href = "#";
-        link.className = "record-link";
-        link.innerHTML = "📜 Ver Acta";
-        link.onclick = () => alert("Abriendo archivo digital para: " + person.full_name);
-        node.appendChild(link);
-    }
-
-    row.appendChild(node);
-    container.appendChild(row);
-
-    // Find children
-    const childrenIds = [];
-    for (const famId in data.families) {
-        const fam = data.families[famId];
-        if (fam.husb === indiId || fam.wife === indiId) {
-            fam.chil.forEach(cid => { if(!childrenIds.includes(cid)) childrenIds.push(cid); });
+function findParents(indiId) {
+    for (const famId in genealogicalData.families) {
+        const fam = genealogicalData.families[famId];
+        if (fam.chil.includes(indiId)) {
+            return { husb: fam.husb, wife: fam.wife };
         }
     }
-
-    if (childrenIds.length > 0) {
-        const childrenContainer = document.createElement('div');
-        childrenContainer.className = 'children-container';
-        childrenContainer.style.display = "flex";
-        childrenContainer.style.gap = "20px";
-        
-        childrenIds.forEach(cid => {
-            const childCol = document.createElement('div');
-            renderLevel(cid, childCol, data, level + 1, maxLevel);
-            childrenContainer.appendChild(childCol);
-        });
-        container.appendChild(childrenContainer);
-    }
+    return { husb: null, wife: null };
 }
 
 window.initDynamicTree = buildDynamicTree;

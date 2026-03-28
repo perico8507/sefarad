@@ -176,35 +176,21 @@
             <li><a href="perfiles/transcripcion_pdf_maria_concepcion.html">Expediente: Transcripcion PDF Maria Concepcion</a><br><span style="font-size: 0.8em; color: #888;">Archivo Sefarad MX</span></li>
             <li><a href="perfiles/transcript_pdf_emilio.html">Expediente: Transcript PDF Emilio</a><br><span style="font-size: 0.8em; color: #888;">Archivo Sefarad MX</span></li>
         </ul>
-            <button class="view-more-btn" id="toggle-docs-btn" onclick="document.getElementById('docs-hall-container').classList.toggle('expanded'); this.innerText = this.innerText == 'VER ARCHIVO COMPLETO' ? 'MOSTRAR MENOS' : 'VER ARCHIVO COMPLETO'">VER ARCHIVO COMPLETO</button>
-        </div>
-
-        <h2 style="font-family: 'Cinzel', serif; letter-spacing: 2px;">Sala de Patriarcas</h2>
-        <div class="gallery-grid">
-            <div class="gallery-card">
-                <h3>Capitán Lucas García</h3>
-                <p style="color: var(--primary-gold-dim); font-size: 0.85em; font-family: 'Cinzel', serif; text-transform: uppercase;">Fundador de Monterrey</p>
-                <p style="font-size: 0.95em; text-align: justify; margin-top: 20px;">Líder de la colonización en 1596 y pilar del linaje García en la región.</p>
-            </div>
-            <div class="gallery-card">
-                <h3>Lorenzo García Gutiérrez</h3>
-                <p style="color: var(--primary-gold-dim); font-size: 0.85em; font-family: 'Cinzel', serif; text-transform: uppercase;">Alférez Real</p>
-                <p style="font-size: 0.95em; text-align: justify; margin-top: 20px;">Originario de la Nueva Extremadura, fundador de los García de la Garza.</p>
             </div>
         </div>
     </div>
 
     <div id="view-buscar" class="tab-content">
-        <div class="search-panel">
-            <h3 style="font-family: 'Cinzel', serif; border-bottom: 1px solid var(--primary-gold-dim); padding-bottom: 10px;">CONSULTAR ARCHIVO HISTÓRICO</h3>
-            <div class="search-form" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px;">
-                <div><label>Nombres</label><input type="text" id="s_nombres" placeholder="Ej. Francisco"></div>
-                <div><label>Apellidos</label><input type="text" id="s_apellidos" placeholder="Ej. García Peña"></div>
-                <div><label>Ciudad / Estado</label><input type="text" id="s_lugar" placeholder="Ej. Saltillo"></div>
+        <div class="search-panel" style="background: white; padding: 40px; border: 1px solid var(--primary-gold);">
+            <h3 style="font-family: 'Cinzel', serif; border-bottom: 2px solid var(--primary-gold); padding-bottom: 15px; margin-bottom: 30px; letter-spacing: 2px;">CONSULTAR ARCHIVO HISTÓRICO INSTITUCIONAL</h3>
+            <div class="search-form" style="display:grid; grid-template-columns: 1fr 1fr 1fr; gap:20px; margin-bottom: 30px;">
+                <div style="display:flex; flex-direction:column;"><label style="font-family:'Cinzel',serif; font-size:0.8rem; color:#888; margin-bottom:5px;">NOMBRES</label><input type="text" id="s_nombres" placeholder="Ej. Francisco" style="padding:12px; border:1px solid #ddd; font-family:'Libre Baskerville',serif;"></div>
+                <div style="display:flex; flex-direction:column;"><label style="font-family:'Cinzel',serif; font-size:0.8rem; color:#888; margin-bottom:5px;">APELLIDOS</label><input type="text" id="s_apellidos" placeholder="Ej. García Peña" style="padding:12px; border:1px solid #ddd; font-family:'Libre Baskerville',serif;"></div>
+                <div style="display:flex; flex-direction:column;"><label style="font-family:'Cinzel',serif; font-size:0.8rem; color:#888; margin-bottom:5px;">CIUDAD / ESTADO</label><input type="text" id="s_lugar" placeholder="Ej. Saltillo" style="padding:12px; border:1px solid #ddd; font-family:'Libre Baskerville',serif;"></div>
             </div>
-            <button class="btn" style="width:100%;" onclick="searchSupabase()">REALIZAR CONSULTA</button>
-            <div id="search-results" style="margin-top: 30px; display:none;">
-                <h4 style="font-family: 'Cinzel', serif;">Resultados de Búsqueda</h4>
+            <button class="btn" style="width:100%; padding:15px; font-weight:bold; letter-spacing:2px;" onclick="searchSupabase()">REALIZAR CONSULTA AL REPOSITORIO</button>
+            <div id="search-results" style="margin-top: 40px; display:none; border-top:1px solid #eee; padding-top:30px;">
+                <h4 style="font-family: 'Cinzel', serif; color:var(--primary-gold-dim); margin-bottom:20px;">RESULTADOS DE LA BÚSQUEDA</h4>
                 <ul id="results-list" style="list-style:none; padding:0;"></ul>
             </div>
         </div>

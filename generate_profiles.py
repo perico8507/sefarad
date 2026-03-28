@@ -154,6 +154,9 @@ def generate_profiles():
             
         generated_links.append((display_name, html_filename))
         
+    with open(os.path.join(os.path.dirname(DATA_FILE), 'profile_map.json'), 'w', encoding='utf-8') as f:
+        json.dump({clean_str(name): url for name, url in generated_links}, f, indent=2)
+    
     return generated_links
 
 def update_index(generated_links):
@@ -176,10 +179,9 @@ def update_index(generated_links):
             f.write(new_content)
         print("index.html updated successfully via placeholder.")
     else:
-        # Fallback to regex
         pattern = re.compile(r'(<div class="documents-hall"[^>]*>\s*)<ul>.*?</ul>(\s*</div>)', re.DOTALL)
         if pattern.search(content):
-            new_content = pattern.sub(rf'\g<1><ul>\n{list_html}\n</ul>\g<2>', content)
+            new_content = pattern.sub(rf'\g<1>{list_html}\g<2>', content)
             with open(INDEX_FILE, 'w', encoding='utf-8') as f:
                 f.write(new_content)
             print("index.html updated successfully via regex.")
