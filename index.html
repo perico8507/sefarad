@@ -1,295 +1,268 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SEFARAD-MX | Historia, Genealogía y Heráldica del Noreste</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Dosis:wght@400;700&family=Cinzel:wght@400;700;900&family=Lora:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
-    <style>
-        :root {
-            --primary-gold: #dd9933;
-            --text-grey: #696969;
-            --border-light: #ededed;
-        }
+import React, { useState, useEffect } from 'react';
+import { Shield, Book, MapPin, Calendar, Award, Menu, X, ChevronRight, Globe } from 'lucide-react';
 
-        body {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            color: #333;
-            background-color: #fff;
-        }
+const App = () => {
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
-        .font-dosis { font-family: 'Dosis', sans-serif; }
-        .font-cinzel { font-family: 'Cinzel', serif; }
-        .font-lora { font-family: 'Lora', serif; }
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 50);
+    };
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
-        /* Estilo de los divisores del sitio de referencia */
-        .site-divider {
-            border: 0;
-            border-top: 3px solid var(--border-light);
-            margin: 0;
-        }
+  const navLinks = [
+    { name: 'La Institución', href: '#' },
+    { name: 'Historia y Linaje', href: '#' },
+    { name: 'Agenda Cultural', href: '#' },
+    { name: 'Archivo Histórico', href: '#' },
+    { name: 'Relaciones', href: '#' }
+  ];
 
-        /* Navegación pegadiza */
-        .main-nav {
-            border-top: 1px solid #eee;
-            border-bottom: 1px solid #eee;
-            position: sticky;
-            top: 0;
-            background: white;
-            z-index: 50;
-        }
-
-        .nav-link {
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            font-size: 15px;
-            font-weight: 500;
-            color: #333;
-            padding: 15px 10px;
-            transition: color 0.3s;
-        }
-
-        .nav-link:hover, .nav-link.active {
-            color: var(--primary-gold);
-        }
-
-        /* Botón estilo "Quiero mi lámina" */
-        .btn-action {
-            background-color: var(--primary-gold);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 4px;
-            font-weight: 700;
-            display: inline-flex;
-            align-items: center;
-            gap: 10px;
-            transition: opacity 0.3s;
-        }
-
-        .btn-action:hover {
-            opacity: 0.9;
-        }
-
-        /* Buscador con fondo de imagen */
-        .search-block {
-            background-image: linear-gradient(rgba(255,255,255,0.1), rgba(255,255,255,0.1)), url('https://www.heraldicafamiliar.com/wp-content/uploads/2016/03/buscador.jpg');
-            background-size: cover;
-            background-position: center;
-            padding: 60px 20px;
-        }
-
-        .search-container {
-            max-width: 800px;
-            margin: 0 auto;
-        }
-
-        .search-input {
-            width: 100%;
-            padding: 15px 20px;
-            border: 1px solid #ccc;
-            border-radius: 4px 0 0 4px;
-            font-size: 16px;
-        }
-
-        .search-submit {
-            background: var(--primary-gold);
-            color: white;
-            padding: 15px 35px;
-            border-radius: 0 4px 4px 0;
-            font-weight: 700;
-            text-transform: uppercase;
-        }
-
-        /* Iconos de servicios */
-        .feature-icon-circle {
-            width: 90px;
-            height: 90px;
-            background: var(--primary-gold);
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            font-size: 40px;
-            margin: 0 auto 20px;
-        }
-
-        .tab-content { display: none; }
-        .tab-content.active { display: block; }
-
-        footer {
-            background-color: #f5f5f5;
-            color: #666;
-            border-top: 1px solid #ddd;
-        }
-    </style>
-</head>
-<body>
-
-    <!-- Header / Logo -->
-    <header class="py-8 container mx-auto px-4 flex justify-center md:justify-start">
-        <div class="cursor-pointer" onclick="showTab('inicio')">
-            <h1 class="font-cinzel text-4xl font-black tracking-tighter text-gray-800">SEFARAD-MX</h1>
-            <p class="text-[10px] uppercase tracking-[0.4em] font-bold text-gray-400 -mt-1">Instituto de Historia y Genealogía</p>
-        </div>
-    </header>
-
-    <!-- Menú Principal -->
-    <nav class="main-nav">
-        <div class="container mx-auto px-4 overflow-x-auto whitespace-nowrap">
-            <div class="flex gap-8 justify-center">
-                <button onclick="showTab('inicio')" id="btn-inicio" class="nav-link active">Inicio</button>
-                <button onclick="showTab('genealogias')" id="btn-genealogias" class="nav-link">Genealogías</button>
-                <button onclick="showTab('buscador')" id="btn-buscador" class="nav-link">Buscador</button>
-                <button class="nav-link">Tienda</button>
-                <button class="nav-link">Recursos</button>
-                <button class="nav-link">Contacto</button>
+  return (
+    <div className="min-h-screen bg-[#fcfaf7] text-[#1a1a1a] font-serif">
+      {/* Navigation */}
+      <nav className={`fixed w-full z-50 transition-all duration-500 ${isScrolled ? 'bg-white shadow-md py-2' : 'bg-transparent py-6'}`}>
+        <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
+          <div className="flex items-center gap-3">
+            <div className="w-12 h-12 border-2 border-[#c5a059] flex items-center justify-center rounded-sm">
+              <span className="text-[#1a2b48] font-bold text-xl">S</span>
             </div>
+            <div className={`transition-opacity duration-300 ${isScrolled ? 'opacity-100' : 'opacity-100'}`}>
+              <h1 className="text-sm tracking-[0.3em] font-bold text-[#1a2b48] uppercase">Sefarad MX</h1>
+              <p className="text-[10px] tracking-[0.2em] text-[#c5a059] uppercase">Legado y Excelencia</p>
+            </div>
+          </div>
+
+          {/* Desktop Nav */}
+          <div className="hidden md:flex gap-8">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                className="text-xs uppercase tracking-widest text-[#1a2b48] hover:text-[#c5a059] transition-colors"
+              >
+                {link.name}
+              </a>
+            ))}
+          </div>
+
+          <button className="md:hidden text-[#1a2b48]" onClick={() => setIsMenuOpen(!isMenuOpen)}>
+            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+          </button>
         </div>
-    </nav>
+      </nav>
 
-    <!-- Secciones -->
-    <main>
-        
-        <!-- VISTA: INICIO -->
-        <div id="view-inicio" class="tab-content active">
-            <hr class="site-divider">
-            
-            <div class="container mx-auto px-4 py-12 text-center">
-                <h2 class="font-cinzel text-3xl md:text-5xl font-bold text-gray-800 mb-6 transition hover:text-orange-600 cursor-pointer">
-                    Servicios Genealógicos Profesionales
-                </h2>
-                <hr class="site-divider max-w-5xl mx-auto mb-12">
+      {/* Mobile Menu Overlay */}
+      {isMenuOpen && (
+        <div className="fixed inset-0 bg-white z-40 flex flex-col items-center justify-center gap-8">
+          {navLinks.map((link) => (
+            <a key={link.name} href={link.href} className="text-lg uppercase tracking-widest text-[#1a2b48]" onClick={() => setIsMenuOpen(false)}>
+              {link.name}
+            </a>
+          ))}
+        </div>
+      )}
 
-                <!-- Video / Imagen Principal -->
-                <div class="max-w-4xl mx-auto mb-16 shadow-lg rounded overflow-hidden">
-                    <img src="https://images.unsplash.com/photo-1455390582262-044cdead277a?auto=format&fit=crop&q=80" 
-                         class="w-full h-[400px] object-cover" alt="Investigación Genealógica">
-                </div>
+      {/* Hero Section */}
+      <section className="relative h-screen flex items-center justify-center overflow-hidden">
+        <div className="absolute inset-0 bg-[#1a2b48]">
+          <div className="absolute inset-0 opacity-20 bg-[url('https://images.unsplash.com/photo-1518709268805-4e9042af9f23?auto=format&fit=crop&q=80')] bg-cover bg-center mix-blend-overlay"></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#1a2b48]/40 to-[#fcfaf7]"></div>
+        </div>
 
-                <h3 class="font-cinzel text-2xl font-bold text-gray-800 mb-4">¿Quiénes forman el Instituto Sefarad MX?</h3>
-                <p class="text-xl text-gray-500 font-lora italic leading-relaxed max-w-3xl mx-auto mb-8">
-                    Somos un equipo de genealogistas con amplia experiencia, dedicado a reconstruir y documentar la historia de las familias que colonizaron el Noreste de México.
+        <div className="relative z-10 text-center px-6 max-w-4xl">
+          <div className="mb-6 flex justify-center">
+            <Shield className="text-[#c5a059] w-16 h-16 stroke-[1px]" />
+          </div>
+          <h2 className="text-4xl md:text-6xl text-white mb-6 font-light tracking-tight italic">
+            "Custodios de una memoria milenaria"
+          </h2>
+          <div className="w-24 h-[1px] bg-[#c5a059] mx-auto mb-8"></div>
+          <p className="text-white/80 text-lg md:text-xl font-light leading-relaxed mb-10 max-w-2xl mx-auto">
+            Preservando el patrimonio histórico y los vínculos culturales entre las raíces sefardíes y la identidad nacional.
+          </p>
+          <button className="bg-[#c5a059] text-white px-10 py-4 text-xs uppercase tracking-[0.2em] hover:bg-[#b08d4a] transition-all rounded-sm shadow-xl">
+            Explorar el Archivo
+          </button>
+        </div>
+      </section>
+
+      {/* Institutional Message */}
+      <section className="py-24 px-6 bg-[#fcfaf7]">
+        <div className="max-w-4xl mx-auto text-center">
+          <span className="text-[#c5a059] text-xs uppercase tracking-[0.3em] mb-4 block">Mensaje de la Institución</span>
+          <h3 className="text-3xl md:text-4xl text-[#1a2b48] mb-10 leading-snug">
+            Nuestra labor trasciende el tiempo, uniendo los hilos de la historia para las generaciones venideras.
+          </h3>
+          <p className="text-[#4a4a4a] text-lg leading-relaxed mb-8">
+            Desde Sefarad MX, trabajamos en la dignificación y el reconocimiento del legado sefardí, 
+            actuando como puente institucional para aquellos que buscan reencontrarse con su origen y 
+            honrar la herencia que ha moldeado siglos de historia.
+          </p>
+          <div className="italic text-[#c5a059] text-xl tracking-wide">
+            Excelentísima Dirección General
+          </div>
+        </div>
+      </section>
+
+      {/* Pillars Section */}
+      <section className="py-20 px-6 bg-white border-y border-[#e5e1d8]">
+        <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-16">
+          <div className="flex flex-col items-center text-center group">
+            <div className="w-20 h-20 bg-[#f9f7f2] rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-[#e5e1d8]">
+              <Book className="text-[#c5a059] w-8 h-8 stroke-[1px]" />
+            </div>
+            <h4 className="text-xl text-[#1a2b48] mb-4 uppercase tracking-wider">Investigación Histórica</h4>
+            <p className="text-sm text-[#666] leading-relaxed">
+              Estudio riguroso y documentación de los linajes y la diáspora que ha enriquecido nuestra cultura.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center text-center group">
+            <div className="w-20 h-20 bg-[#f9f7f2] rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-[#e5e1d8]">
+              <Award className="text-[#c5a059] w-8 h-8 stroke-[1px]" />
+            </div>
+            <h4 className="text-xl text-[#1a2b48] mb-4 uppercase tracking-wider">Certificación de Origen</h4>
+            <p className="text-sm text-[#666] leading-relaxed">
+              Avalamos la veracidad y el rigor en la reconstrucción genealógica de las familias.
+            </p>
+          </div>
+
+          <div className="flex flex-col items-center text-center group">
+            <div className="w-20 h-20 bg-[#f9f7f2] rounded-full flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-500 border border-[#e5e1d8]">
+              <Globe className="text-[#c5a059] w-8 h-8 stroke-[1px]" />
+            </div>
+            <h4 className="text-xl text-[#1a2b48] mb-4 uppercase tracking-wider">Vínculo Internacional</h4>
+            <p className="text-sm text-[#666] leading-relaxed">
+              Fomentamos la hermandad institucional entre naciones y comunidades sefardíes globales.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      {/* Featured News / Journal */}
+      <section className="py-24 px-6 bg-[#fcfaf7]">
+        <div className="max-w-7xl mx-auto">
+          <div className="flex justify-between items-end mb-12">
+            <div>
+              <h2 className="text-xs uppercase tracking-[0.3em] text-[#c5a059] mb-2">Crónica Actual</h2>
+              <h3 className="text-4xl text-[#1a2b48]">Agenda y Novedades</h3>
+            </div>
+            <button className="hidden md:flex items-center gap-2 text-xs uppercase tracking-widest text-[#1a2b48] hover:translate-x-1 transition-transform">
+              Ver todas las noticias <ChevronRight size={16} />
+            </button>
+          </div>
+
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12">
+            <div className="relative group overflow-hidden bg-white shadow-sm border border-[#e5e1d8]">
+              <div className="h-80 overflow-hidden">
+                <img 
+                  src="https://images.unsplash.com/photo-1548013146-72479768bbaa?auto=format&fit=crop&q=80" 
+                  alt="Patrimonio" 
+                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
+                />
+              </div>
+              <div className="p-8">
+                <span className="text-[10px] uppercase tracking-widest text-[#c5a059] font-bold">Patrimonio Histórico</span>
+                <h4 className="text-2xl text-[#1a2b48] my-4">Restauración de Archivos del Siglo XVII</h4>
+                <p className="text-[#666] text-sm leading-relaxed mb-6">
+                  Se ha iniciado un proceso de digitalización para preservar los documentos que datan del periodo colonial...
                 </p>
-                
-                <button class="btn-action mb-12">Iniciar mi Árbol Familiar</button>
+                <a href="#" className="text-xs uppercase tracking-widest text-[#1a2b48] font-bold border-b border-[#c5a059] pb-1">Leer más</a>
+              </div>
             </div>
 
-            <!-- Features -->
-            <div class="bg-gray-50 py-20">
-                <div class="container mx-auto px-4">
-                    <div class="grid md:grid-cols-3 gap-12 text-center">
-                        <div class="flex flex-col">
-                            <div class="feature-icon-circle">📜</div>
-                            <h4 class="font-bold text-xl mb-3">Genealogías</h4>
-                            <p class="text-sm text-gray-500 mb-6">Documentamos tu Árbol Genealógico Familiar con precisión científica.</p>
-                            <a href="#" class="text-orange-600 font-bold uppercase text-xs tracking-widest">Me interesa »</a>
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="feature-icon-circle">🛡️</div>
-                            <h4 class="font-bold text-xl mb-3">Láminas de Apellidos</h4>
-                            <p class="text-sm text-gray-500 mb-6">Láminas exclusivas con el Origen e Historia de los Apellidos del Noreste.</p>
-                            <a href="#" class="text-orange-600 font-bold uppercase text-xs tracking-widest">Me interesa »</a>
-                        </div>
-                        <div class="flex flex-col">
-                            <div class="feature-icon-circle">📝</div>
-                            <h4 class="font-bold text-xl mb-3">Plantillas Árboles</h4>
-                            <p class="text-sm text-gray-500 mb-6">Herramientas digitales para rellenar tu propia historia familiar.</p>
-                            <a href="#" class="text-orange-600 font-bold uppercase text-xs tracking-widest">Me interesa »</a>
-                        </div>
-                    </div>
+            <div className="space-y-8">
+              {[1, 2, 3].map((item) => (
+                <div key={item} className="flex gap-6 items-start group cursor-pointer">
+                  <div className="w-32 h-32 bg-gray-200 flex-shrink-0 overflow-hidden">
+                    <img 
+                      src={`https://images.unsplash.com/photo-1512101176959-c557f3516787?auto=format&fit=crop&q=80&sig=${item}`} 
+                      alt="Evento" 
+                      className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    />
+                  </div>
+                  <div>
+                    <span className="text-[9px] uppercase tracking-[0.2em] text-[#c5a059]">15 de Septiembre, 2024</span>
+                    <h5 className="text-lg text-[#1a2b48] mt-2 group-hover:text-[#c5a059] transition-colors leading-tight">
+                      Coloquio Internacional sobre la Herencia Sefardí en el Noreste
+                    </h5>
+                    <p className="text-[#666] text-xs mt-2 line-clamp-2 italic">Bajo el patrocinio de las instituciones aliadas...</p>
+                  </div>
                 </div>
+              ))}
             </div>
-
-            <!-- Buscador Section -->
-            <div class="search-block">
-                <div class="search-container text-center">
-                    <h2 class="font-cinzel text-3xl font-bold mb-8 text-gray-800">Buscador de Apellidos</h2>
-                    <div class="flex flex-col md:flex-row">
-                        <input type="text" class="search-input" placeholder="Escribe el apellido a buscar">
-                        <button class="search-submit">Buscar</button>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Datos Finales -->
-            <div class="container mx-auto px-4 py-20">
-                <div class="max-w-4xl mx-auto text-center">
-                    <h2 class="font-cinzel text-2xl font-bold mb-6">Más de 60,000 apellidos documentados</h2>
-                    <p class="text-lg text-gray-500 mb-8 leading-relaxed">
-                        En el <strong>Instituto Sefarad MX</strong> nos dedicamos a la investigación del origen e historia de los apellidos vinculados a la colonización del Nuevo Reino de León, poniendo a su disposición décadas de intenso trabajo paleográfico.
-                    </p>
-                    <button class="btn-action">
-                        <span>📄</span> Quiero la lámina de mi apellido
-                    </button>
-                </div>
-            </div>
+          </div>
         </div>
+      </section>
 
-        <!-- VISTA: GENEALOGIAS -->
-        <div id="view-genealogias" class="tab-content py-20">
-            <div class="container mx-auto px-4 max-w-4xl">
-                <h2 class="font-cinzel text-3xl font-bold mb-8 border-b-2 border-orange-600 pb-2">Servicios de Investigación</h2>
-                <div class="space-y-8 font-lora text-lg leading-relaxed text-gray-700">
-                    <p>Realizamos investigaciones exhaustivas en archivos parroquiales y municipales, rastreando líneas directas hasta los primeros pobladores del noreste mexicano.</p>
-                    <p>Nuestra metodología incluye la transcripción de documentos antiguos, verificación de dispensas matrimoniales y cruce de datos con archivos históricos nacionales e internacionales.</p>
-                </div>
-            </div>
-        </div>
-
-    </main>
-
-    <!-- Footer -->
-    <footer class="py-16">
-        <div class="container mx-auto px-4">
-            <div class="grid md:grid-cols-3 gap-12">
-                <div class="flex flex-col items-center md:items-start">
-                    <h4 class="font-cinzel text-2xl font-black mb-6">SEFARAD-MX</h4>
-                    <p class="text-xs italic leading-relaxed text-gray-400">Preservando el legado de los colonizadores del noreste mexicano a través del rigor histórico.</p>
+      {/* Footer */}
+      <footer className="bg-[#1a2b48] text-white py-20 px-6">
+        <div className="max-w-7xl mx-auto">
+          <div className="grid grid-cols-1 md:grid-cols-4 gap-12 mb-16">
+            <div className="col-span-1 md:col-span-2">
+              <div className="flex items-center gap-3 mb-8">
+                <div className="w-10 h-10 border border-[#c5a059] flex items-center justify-center">
+                  <span className="text-white font-bold text-lg">S</span>
                 </div>
                 <div>
-                    <h5 class="font-bold text-gray-800 uppercase tracking-widest text-xs mb-6">Instituto Sefarad MX</h5>
-                    <ul class="text-sm space-y-3">
-                        <li><a href="#" class="hover:text-orange-600">Quiénes somos</a></li>
-                        <li><a href="#" class="hover:text-orange-600">Colabora con nosotros</a></li>
-                        <li><a href="#" class="hover:text-orange-600">Contacto</a></li>
-                        <li class="pt-4"><a href="#" class="font-bold text-gray-800 hover:text-orange-600 italic underline">Estándar de Transparencia</a></li>
-                    </ul>
+                  <h1 className="text-sm tracking-[0.3em] font-bold text-white uppercase">Sefarad MX</h1>
                 </div>
-                <div>
-                    <h5 class="font-bold text-gray-800 uppercase tracking-widest text-xs mb-6">Síguenos</h5>
-                    <div class="flex gap-4 text-xs font-bold mb-8">
-                        <a href="#" class="hover:text-orange-600 uppercase">Twitter</a>
-                        <a href="#" class="hover:text-orange-600 uppercase">Facebook</a>
-                    </div>
-                    <p class="text-[10px] uppercase font-bold text-gray-400">Pago seguro mediante SSL</p>
+              </div>
+              <p className="text-white/60 text-sm max-w-sm leading-relaxed mb-8">
+                Institución dedicada al estudio, preservación y divulgación de la cultura sefardí, 
+                manteniendo vivos los lazos históricos que nos definen.
+              </p>
+              <div className="flex gap-4">
+                <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#c5a059] transition-colors cursor-pointer">
+                  <span className="text-[10px]">IN</span>
                 </div>
+                <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#c5a059] transition-colors cursor-pointer">
+                  <span className="text-[10px]">TW</span>
+                </div>
+                <div className="w-8 h-8 rounded-full border border-white/20 flex items-center justify-center hover:bg-[#c5a059] transition-colors cursor-pointer">
+                  <span className="text-[10px]">FB</span>
+                </div>
+              </div>
             </div>
-            
-            <div class="mt-16 pt-8 border-t border-gray-200 text-center text-[10px] font-bold uppercase tracking-[0.3em] text-gray-400">
-                © 2026 SEFARAD-MX | GRUPO EMPRESARIAL GARGA & FRENTE CARDENISTA
+
+            <div>
+              <h6 className="text-xs uppercase tracking-[0.2em] text-[#c5a059] mb-8">Navegación</h6>
+              <ul className="space-y-4 text-sm text-white/70">
+                <li className="hover:text-white transition-colors"><a href="#">Prensa y Comunicación</a></li>
+                <li className="hover:text-white transition-colors"><a href="#">Solicitud de Genealogía</a></li>
+                <li className="hover:text-white transition-colors"><a href="#">Biblioteca Digital</a></li>
+                <li className="hover:text-white transition-colors"><a href="#">Transparencia</a></li>
+              </ul>
             </div>
+
+            <div>
+              <h6 className="text-xs uppercase tracking-[0.2em] text-[#c5a059] mb-8">Contacto Institucional</h6>
+              <ul className="space-y-4 text-sm text-white/70 italic">
+                <li className="flex items-center gap-2"><MapPin size={14} className="text-[#c5a059]" /> Ciudad de México, México</li>
+                <li className="flex items-center gap-2"><Calendar size={14} className="text-[#c5a059]" /> Lunes a Viernes, 09:00 - 18:00</li>
+                <li className="pt-4 text-white font-medium not-italic">secretaria@sefaradmx.org</li>
+              </ul>
+            </div>
+          </div>
+
+          <div className="border-t border-white/10 pt-10 flex flex-col md:row justify-between items-center gap-4">
+            <p className="text-[10px] uppercase tracking-widest text-white/40">
+              © 2024 Sefarad MX - Todos los derechos reservados
+            </p>
+            <div className="flex gap-8 text-[10px] uppercase tracking-widest text-white/40">
+              <a href="#" className="hover:text-white">Aviso de Privacidad</a>
+              <a href="#" className="hover:text-white">Protocolos Institucionales</a>
+            </div>
+          </div>
         </div>
-    </footer>
+      </footer>
+    </div>
+  );
+};
 
-    <script>
-        function showTab(id) {
-            // Ocultar todas las vistas
-            document.querySelectorAll('.tab-content').forEach(view => view.classList.remove('active'));
-            // Desactivar botones de navegación
-            document.querySelectorAll('.nav-link').forEach(btn => btn.classList.remove('active'));
-            
-            // Activar vista seleccionada
-            const targetView = document.getElementById('view-' + id);
-            if(targetView) targetView.classList.add('active');
-            
-            // Activar botón seleccionado
-            const targetBtn = document.getElementById('btn-' + id);
-            if(targetBtn) targetBtn.classList.add('active');
-
-            window.scrollTo({ top: 0, behavior: 'smooth' });
-        }
-    </script>
-</body>
-</html>
+export default App;
 
