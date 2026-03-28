@@ -178,10 +178,12 @@ def update_index(generated_links):
         with open(INDEX_FILE, 'w', encoding='utf-8') as f:
             f.write(new_content)
         print("index.html updated successfully via placeholder.")
-    else:
-        pattern = re.compile(r'(<div class="documents-hall"[^>]*>\s*)<ul>.*?</ul>(\s*</div>)', re.DOTALL)
+        # Fallback to regex
+        pattern = re.compile(r'(<div class="documents-hall"[^>]*>).*?(</div>)', re.DOTALL)
         if pattern.search(content):
-            new_content = pattern.sub(rf'\g<1>{list_html}\g<2>', content)
+            # Include the view-more button logic
+            full_list_html = f'\n            {list_html}\n            <button class="view-more-btn" id="toggle-docs-btn" onclick="document.getElementById(\'docs-hall-container\').classList.toggle(\'expanded\'); this.innerText = this.innerText == \'VER ARCHIVO COMPLETO\' ? \'MOSTRAR MENOS\' : \'VER ARCHIVO COMPLETO\'">VER ARCHIVO COMPLETO</button>\n        '
+            new_content = pattern.sub(rf'\g<1>{full_list_html}\g<2>', content)
             with open(INDEX_FILE, 'w', encoding='utf-8') as f:
                 f.write(new_content)
             print("index.html updated successfully via regex.")
