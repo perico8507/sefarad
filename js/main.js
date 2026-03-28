@@ -26,8 +26,13 @@ function normalize(s) {
 function showTab(tabId) {
     document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
     document.querySelectorAll('.header-nav a').forEach(el => el.classList.remove('active'));
-    document.getElementById('view-' + tabId).classList.add('active');
-    document.getElementById('tab-' + tabId).classList.add('active');
+    
+    const view = document.getElementById('view-' + tabId);
+    const tab = document.getElementById('tab-' + tabId);
+    
+    if (view) view.classList.add('active');
+    if (tab) tab.classList.add('active');
+    
     if (tabId === 'buscar') loadSefaradData();
 }
 

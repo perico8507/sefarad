@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sefarad MX | Linaje Gaona</title>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/main.css">
+    <style>
+        .gaona-hero {
+            height: 60vh;
+            background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.8)), url('assets/actas/escudo familiar.jpg') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            color: var(--primary-gold);
+            text-align: center;
+            border-bottom: 3px solid var(--primary-gold);
+        }
+        .lineage-card {
+            background: white;
+            border: 1px solid var(--primary-gold);
+            padding: 40px;
+            margin: -50px auto 50px;
+            max-width: 900px;
+            position: relative;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .gaona-tree {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+            padding: 40px 0;
+        }
+        .gaona-node {
+            background: var(--bg-cream);
+            border: 2px solid var(--primary-gold-dim);
+            padding: 20px;
+            width: 300px;
+            text-align: center;
+            position: relative;
+            transition: all 0.3s;
+        }
+        .gaona-node:hover {
+            border-color: var(--primary-gold);
+            transform: scale(1.05);
+        }
+        .gaona-node h3 { margin: 0; font-family: 'Cinzel', serif; color: var(--primary-dark); }
+        .gaona-node p { margin: 5px 0 0; font-size: 0.9rem; color: var(--primary-gold-dim); }
+        
+        .connector {
+            width: 2px;
+            height: 30px;
+            background: var(--primary-gold-dim);
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="header-content">
+            <h1>SEFARAD-MX</h1>
+            <div class="header-nav">
+                <a href="index.html">INICIO</a>
+                <a href="index.html?tab=arbol">ARCHIVO</a>
+                <a href="index.html?tab=buscar">BUSCAR</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="gaona-hero">
+        <h2 style="font-size: 3.5rem; letter-spacing: 8px;">LINAJE GAONA</h2>
+        <p style="font-size: 1.2rem; color: #fff;">Custodiando la memoria de los patriarcas del noreste.</p>
+    </div>
+
+    <div class="container">
+        <div class="lineage-card">
+            <h2 style="text-align:center; font-family:'Cinzel', serif; border-bottom:1px solid #eee; padding-bottom:20px;">LA RAMA DORADA</h2>
+            
+            <div class="gaona-tree">
+                <!-- Abuelos / Padres del patriarca -->
+                <div style="display:flex; gap:20px;">
+                    <div class="gaona-node">
+                        <h3>Guadalupe Gaona Alemán</h3>
+                        <p>Patriarca de la Familia</p>
+                    </div>
+                    <div class="gaona-node">
+                        <h3>Maria Guadalupe Aguilar</h3>
+                        <p>Matriarca de la Familia</p>
+                    </div>
+                </div>
+
+                <div class="connector"></div>
+
+                <!-- El Hijo / Padre -->
+                <div class="gaona-node" style="border-width: 3px; border-color: var(--primary-gold);">
+                    <h3>José Santos Gaona Aguilar</h3>
+                    <p>Pilar del Linaje Moderno</p>
+                </div>
+
+                <div class="connector"></div>
+
+                <!-- Descendencia Directa -->
+                <div class="gaona-node">
+                    <h3>Francisco Javier García Gaona</h3>
+                    <p>Custodio de la Memoria Sefarad-MX</p>
+                </div>
+            </div>
+
+            <p style="text-align:justify; line-height:1.8; margin-top:40px; border-top:1px solid #eee; padding-top:20px;">
+                Este espacio institucional rinde tributo a la descendencia de <strong>Don Santos Gaona Aguilar</strong>, cuyo legado se extiende desde las raíces del noreste mexicano hasta la preservación documental que hoy sostiene el **Grupo Empresarial GarGa**. Cada acta y registro asociado a este linaje ha sido resguardado en la bóveda digital de Sefarad-MX para las generaciones futuras.
+            </p>
+        </div>
+    </div>
+
+    <footer class="footer">
+        <p>&copy; 2026 GRUPO EMPRESARIAL GARGA<br>Archivo Sefarad MX. Custodiando la Identidad y el Linaje Gaona.</p>
+    </footer>
+</body>
+</html>
